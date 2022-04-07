@@ -1,0 +1,25 @@
+<div class="p-field p-col-12">
+  <div class="p-formgrid p-grid">
+
+    <div class="p-field p-col-12">
+      <p-divider align="center">
+        <span class="p-tag">خرید</span>
+      </p-divider>
+    </div>
+
+    <!------   purchase    ------------>
+      <app-exchange-purchase [domIdExchangeType]="enExchangeTypes.purchase"
+                             [domIdAccountType]="domIdAccountType"></app-exchange-purchase>
+
+    <div class="p-field p-col-12">
+      <p-divider align="center">
+        <span class="p-tag">فروش</span>
+      </p-divider>
+    </div>
+
+    <!------     sale      ------------>
+      <app-exchange-sale [domIdExchangeType]="enExchangeTypes.sale"
+                         [domIdAccountType]="domIdAccountType"></app-exchange-sale>
+  </div>
+
+</div>

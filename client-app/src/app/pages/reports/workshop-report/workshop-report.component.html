@@ -1,0 +1,221 @@
+<div class="p-field p-col-12">
+  <div class="report-component p-fluid p-formgrid p-grid">
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label>کد :</label>
+      <p-inputNumber mode="decimal" [(ngModel)]="workshopCode"></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12  p-md-3" [@fadeInOnEnter]>
+      <label>مشتری :</label>
+      <p-autoComplete [suggestions]="filterCustomer"
+                      (completeMethod)="searchCustomer($event)"
+                      [minLength]=1
+                      [(ngModel)]="selectedCustomer"
+      >
+        <ng-template let-customer pTemplate="item">
+          <div class="country-item">
+            <div>{{customer.label}}</div>
+          </div>
+        </ng-template>
+      </p-autoComplete>
+    </div>
+
+    <div class="p-field p-col-12  p-md-3" [@fadeInOnEnter]>
+      <label>نوع تبادل</label>
+      <p-dropdown placeholder="انتخاب نوع تبادل"
+                  [filter]="true"
+                  [options]="exchangeTypes"
+                  [(ngModel)]="selectedExchangeTypesId"
+      ></p-dropdown>
+    </div>
+
+
+    <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+      <label>عنوان انبار :</label>
+      <p-dropdown placeholder="انتخاب انبار"
+                  [filter]="true"
+                  [options]="storage"
+                  [(ngModel)]="selectedStorage"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+      <label>نوع کالا :</label>
+      <p-dropdown placeholder="انتخاب نوع کالا"
+                  [filter]="true"
+                  [options]="goods"
+                  [(ngModel)]="selectedGoodId"
+      ></p-dropdown>
+    </div>
+
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label>تاریخ از :</label>
+      <ngx-jdatepicker
+        mode="day"
+        dir="rtl"
+        theme="dp-material"
+        [config]="datePickerConfig"
+        (onChange)="selectedFromDate($event)"
+      ></ngx-jdatepicker>
+
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label>تاریخ تا :</label>
+      <ngx-jdatepicker
+        mode="day"
+        dir="rtl"
+        theme="dp-material"
+        [config]="datePickerConfig"
+        (onChange)="selectedToDate($event)"
+      ></ngx-jdatepicker>
+
+    </div>
+
+
+  </div>
+</div>
+
+
+<div class="p-field p-col-12" [@fadeInOnEnter]>
+  <div class="report-component p-fluid p-formgrid">
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <button pButton pRipple type="button"
+              (click)="refresh()"
+              [loading]="loading"
+              label="بروزرسانی" class="p-button-outlined p-button-success"
+              icon="bi bi-arrow-counterclockwise" iconPos="left"></button>
+    </div>
+    <p-card>
+      <p-table #dt
+               [value]="reports"
+               [rows]="10"
+               [paginator]="true"
+               [scrollable]="true"
+               [globalFilterFields]="[
+               'ORDER_CODE',
+             'DOM_EXCHANGE_TYPE_TITLE',
+             'CUSTOMER_FULL_NAME',
+             'CUSTOMER_TEL',
+             'GOOD_TITLE',
+             'STORAGE_TITLE',
+             'DOM_ORDER_TYPE_TITLE',
+             ]"
+               [rowHover]="true"
+               scrollDirection="both"
+               [rowsPerPageOptions]="[10,25,50,100]"
+               [loading]="loading"
+               dataKey="id"
+               styleClass="p-datatable-striped p-datatable-gridlines" responsiveLayout="scroll"
+
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between p-grid">
+            <h5 class="p-col-12 p-md-2">گزارش کارگاه</h5>
+            <div class="p-col-12 p-md-10 ">
+          <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="search($event,dt)" placeholder="جستجو..." />
+          </span>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="ORDER_CODE">کد<p-sortIcon field="ORDER_CODE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="ORDER_DATE">تاریخ ارسال<p-sortIcon field="ORDER_DATE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="SETTLEMENT_DATE">تاریخ دریافت<p-sortIcon field="SETTLEMENT_DATE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="CUSTOMER_FULL_NAME">نام مشتری <p-sortIcon field="CUSTOMER_FULL_NAME"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="CUSTOMER_TEL">تلفن <p-sortIcon field="CUSTOMER_TEL"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="GOOD_TITLE">نام کالا <p-sortIcon field="GOOD_TITLE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="GOLD_WEIGHT">وزن طلا<p-sortIcon field="GOLD_WEIGHT"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="DIFFERENT_WEIGHT">اختلاف وزن<p-sortIcon field="DIFFERENT_WEIGHT"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="TOTAL_WEIGHT">وزن نهایی<p-sortIcon field="TOTAL_WEIGHT"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="TOTAL_AMOUNT">قیمت کل<p-sortIcon field="TOTAL_AMOUNT"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="DOM_EXCHANGE_TYPE_TITLE">نوع تبادل<p-sortIcon field="DOM_EXCHANGE_TYPE_TITLE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="STORAGE_TITLE">نام انبار <p-sortIcon field="STORAGE_TITLE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="DOM_ORDER_TYPE_TITLE">نوع سفارش<p-sortIcon field="DOM_ORDER_TYPE_TITLE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="GOLD_PRICE">مبلغ طلا<p-sortIcon field="GOLD_PRICE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="GRAM_PRICE">قیمت هر گرم<p-sortIcon field="GRAM_PRICE"></p-sortIcon></th>
+            <th style="width:200px"  class="p-text-center" pSortableColumn="CREATE_DATE_TIME">تاریخ ثبت<p-sortIcon field="CREATE_DATE_TIME"></p-sortIcon></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report>
+          <tr>
+            <td style="width:200px"  class="p-text-center" pTooltip="{{report.ORDER_CODE}}"
+                tooltipPosition="bottom">{{report.ORDER_CODE}}</td>
+
+            <td dir="ltr" style="width:200px"  class="p-text-center" pTooltip="{{report.ORDER_DATE}}"
+                tooltipPosition="bottom">{{report.ORDER_DATE}}</td>
+
+            <td dir="ltr" style="width:200px"  class="p-text-center" pTooltip="{{report.SETTLEMENT_DATE }}"
+                tooltipPosition="bottom">{{report.SETTLEMENT_DATE}}</td>
+
+            <td style="width:200px"  class="p-text-center" pTooltip="{{report.CUSTOMER_FULL_NAME}}"
+                tooltipPosition="bottom">{{report.CUSTOMER_FULL_NAME}}</td>
+
+            <td style="width:200px"  class="p-text-center" pTooltip="{{report.CUSTOMER_TEL}}"
+                tooltipPosition="bottom">{{report.CUSTOMER_TEL}}</td>
+
+            <td style="width:200px"  class="p-text-center" pTooltip="{{report.GOOD_TITLE}}"
+                tooltipPosition="bottom">{{report.GOOD_TITLE}}</td>
+
+            <td dir="ltr"  style="width:200px"  class="p-text-center" pTooltip="{{report.GOLD_WEIGHT | mask: 'separator':','}}"
+                tooltipPosition="bottom">{{report.GOLD_WEIGHT | mask: 'separator':','}}</td>
+
+            <td dir="ltr"  style="width:200px"  class="p-text-center" pTooltip="{{report.DIFFERENT_WEIGHT | mask: 'separator':','}}"
+                tooltipPosition="bottom">{{report.DIFFERENT_WEIGHT | mask: 'separator':','}}</td>
+
+            <td dir="ltr"  style="width:200px"  class="p-text-center" pTooltip="{{report.TOTAL_WEIGHT | mask: 'separator':','}}"
+                tooltipPosition="bottom">{{report.TOTAL_WEIGHT | mask: 'separator':','}}</td>
+
+            <td dir="ltr"  style="width:200px"  class="p-text-center" pTooltip="{{report.TOTAL_AMOUNT | mask: 'separator':','}}"
+                tooltipPosition="bottom">{{report.TOTAL_AMOUNT | mask: 'separator':','}}</td>
+
+            <td style="width:200px"  class="p-text-center" pTooltip="{{report.DOM_EXCHANGE_TYPE_TITLE}}"
+                tooltipPosition="bottom">{{report.DOM_EXCHANGE_TYPE_TITLE}}</td>
+
+            <td style="width:200px"  class="p-text-center" pTooltip="{{report.STORAGE_TITLE}}"
+                tooltipPosition="bottom">{{report.STORAGE_TITLE}}</td>
+
+            <td style="width:200px"  class="p-text-center" pTooltip="{{report.DOM_ORDER_TYPE_TITLE}}"
+                tooltipPosition="bottom">{{report.DOM_ORDER_TYPE_TITLE}}</td>
+
+            <td dir="ltr"  style="width:200px"  class="p-text-center" pTooltip="{{report.GOLD_PRICE | mask: 'separator':','}}"
+                tooltipPosition="bottom">{{report.GOLD_PRICE | mask: 'separator':','}}</td>
+
+            <td dir="ltr"  style="width:200px"  class="p-text-center" pTooltip="{{report.GRAM_PRICE | mask: 'separator':','}}"
+                tooltipPosition="bottom">{{report.GRAM_PRICE | mask: 'separator':','}}</td>
+
+            <td dir="ltr" style="width:200px"  class="p-text-center" pTooltip="{{report.CREATE_DATE_TIME | mask: ' 9999/99/99 - 99:99:99 '}}"
+                tooltipPosition="bottom">{{report.CREATE_DATE_TIME | mask: ' 9999/99/99 - 99:99:99 '}}</td>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="flex: 1 1 auto; justify-content: flex-start">اطلاعاتی جهت نمایش وجود ندارد</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<!-- Modal -->
+<p-dialog header="" [modal]="true" [style]="{width: '50vw'}" [(visible)]="display"  [resizable]="true" [maximizable]="true">
+  <ng-template pTemplate="header">
+    دریافت / پرداخت
+  </ng-template>
+  <app-payment *ngIf="display"
+               [transactionId]="transactionId"
+               [customerId]="customerId"
+               [paymentDomTransferType]="enTransferType.receive"
+               (closeMe)="display=!$event"></app-payment>
+</p-dialog>
+
+<p-toast position="bottom-left"></p-toast>
+

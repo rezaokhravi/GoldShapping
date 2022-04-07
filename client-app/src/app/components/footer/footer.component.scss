@@ -1,0 +1,12 @@
+:host ::ng-deep footer {
+  bottom: .3rem;
+  position: fixed;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  p {
+    color: var(--gray-color);
+  }
+}

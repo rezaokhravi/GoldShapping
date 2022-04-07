@@ -1,0 +1,135 @@
+
+
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="permissionFrom" (ngSubmit)="saveUser()">
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="drp-user">نام کاربر</label>
+    <p-dropdown
+      [tabindex]="1"
+      appendTo="body"
+      [filter]="true"
+      placeholder="انتخاب کاربر"
+      formControlName="USE_ID"
+      [ngClass]="[this.permissionFrom.controls.USE_ID.invalid && (this.permissionFrom.controls.USE_ID.dirty || this.permissionFrom.controls.USE_ID.touched)  ?'ng-invalid ng-dirty':'']"
+      [options]="users"
+      [(ngModel)]="permission.USE_ID"
+    ></p-dropdown>
+    <div
+      *ngIf="this.permissionFrom.controls.USE_ID.invalid && (this.permissionFrom.controls.USE_ID.dirty || this.permissionFrom.controls.USE_ID.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.permissionFrom.controls.USE_ID.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>نام کاربر اجباری است.
+      </div>
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="drp-menu">عنوان منو</label>
+    <p-dropdown
+      [tabindex]="2"
+      appendTo="body"
+      [filter]="true"
+      placeholder="انتخاب عنوان منو"
+      formControlName="MENU_ID"
+      [ngClass]="[this.permissionFrom.controls.MENU_ID.invalid && (this.permissionFrom.controls.MENU_ID.dirty || this.permissionFrom.controls.MENU_ID.touched)  ?'ng-invalid ng-dirty':'']"
+      [options]="menus"
+      [(ngModel)]="permission.MENU_ID"
+    ></p-dropdown>
+    <div
+      *ngIf="this.permissionFrom.controls.MENU_ID.invalid && (this.permissionFrom.controls.MENU_ID.dirty || this.permissionFrom.controls.MENU_ID.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.permissionFrom.controls.MENU_ID.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>عنوان منو اجباری است.
+      </div>
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label>تاریخ شروع :</label>
+    <p-inputMask
+      [tabindex]="'3'"
+      mask="9999/99/99"
+                 formControlName="START_DATE_TIME"
+                 [ngClass]="[this.permissionFrom.controls.START_DATE_TIME.invalid && (this.permissionFrom.controls.START_DATE_TIME.dirty || this.permissionFrom.controls.START_DATE_TIME.touched)  ?'ng-invalid ng-dirty':'']"
+                 [(ngModel)]="permission.START_DATE_TIME"></p-inputMask>
+    <div
+      *ngIf="this.permissionFrom.controls.START_DATE_TIME.invalid && (this.permissionFrom.controls.START_DATE_TIME.dirty || this.permissionFrom.controls.START_DATE_TIME.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.permissionFrom.controls.START_DATE_TIME.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>تاریخ شروع اجباری است.
+      </div>
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label>تاریخ خاتمه :</label>
+    <p-inputMask
+      [tabindex]="'4'"
+      mask="9999/99/99"
+                 formControlName="END_DATE_TIME"
+                 [ngClass]="[this.permissionFrom.controls.END_DATE_TIME.invalid && (this.permissionFrom.controls.END_DATE_TIME.dirty || this.permissionFrom.controls.END_DATE_TIME.touched)  ?'ng-invalid ng-dirty':'']"
+                 [(ngModel)]="permission.END_DATE_TIME"></p-inputMask>
+    <div
+      *ngIf="this.permissionFrom.controls.END_DATE_TIME.invalid && (this.permissionFrom.controls.END_DATE_TIME.dirty || this.permissionFrom.controls.END_DATE_TIME.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.permissionFrom.controls.END_DATE_TIME.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>تاریخ خاتمه اجباری است.
+      </div>
+    </div>
+  </div>
+
+  <div class="p-field p-col-12" [@fadeInOnEnter]>
+    <label>نوع مجوز</label>
+    <div class="p-field p-col-12  p-grid" [@fadeInOnEnter]>
+      <div  class="p-field p-col-12 p-md-3" >
+        <p-checkbox [tabindex]="5" formControlName="CAN_SELECT" [(ngModel)]="permission.CAN_SELECT"
+                    name="CAN_SELECT" [binary]="true" label="خواندن"></p-checkbox>
+      </div>
+      <div  class="p-field p-col-12 p-md-3">
+        <p-checkbox [tabindex]="6" formControlName="CAN_INSERT" [(ngModel)]="permission.CAN_INSERT"
+                    name="CAN_INSERT" [binary]="true" label="ایجاد"></p-checkbox>
+      </div>
+      <div  class="p-field p-col-12 p-md-3">
+        <p-checkbox [tabindex]="7" formControlName="CAN_UPDATE"  [(ngModel)]="permission.CAN_UPDATE"
+                    name="CAN_UPDATE" [binary]="true" label="ویرایش"></p-checkbox>
+      </div>
+      <div  class="p-field p-col-12 p-md-3">
+        <p-checkbox [tabindex]="8" formControlName="CAN_DELETE" [(ngModel)]="permission.CAN_DELETE"
+                    name="CAN_DELETE" [binary]="true" label="حذف"></p-checkbox>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="p-field p-col-12">
+    <label for="txt-description">توضیحات</label>
+    <input type="text"
+           [tabindex]="9"
+           id="txt-description"
+           formControlName="DESCRIPTION"
+           pInputText
+           />
+  </div>
+
+  <div class="p-field p-md-6">
+    <p-checkbox [tabindex]="9" [(ngModel)]="saveAndClear" formControlName="saveAndClear"
+                name="saveAndClear" [binary]="true" label="ثبت پیاپی"></p-checkbox>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple [tabindex]="10" type="submit" [disabled]="permissionFrom.invalid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple [tabindex]="11" type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>
+
+<p-toast position="bottom-left"></p-toast>

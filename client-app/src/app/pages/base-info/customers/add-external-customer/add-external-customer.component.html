@@ -1,0 +1,56 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="customerForm" (ngSubmit)="saveCustomer()">
+
+
+  <div class="p-field p-col-12">
+    <label for="name-customer">نام مشتری</label>
+    <input type="text"
+           id="name-customer"
+           [ngClass]="[this.customerForm.controls.FAMILY.invalid && (this.customerForm.controls.FAMILY.dirty || this.customerForm.controls.FAMILY.touched)  ?'ng-invalid ng-dirty':'']"
+           formControlName="FAMILY"
+           pInputText
+           [(ngModel)]="customer.FAMILY"/>
+    <div
+      *ngIf="this.customerForm.controls.FAMILY.invalid && (this.customerForm.controls.FAMILY.dirty || this.customerForm.controls.FAMILY.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.customerForm.controls.FAMILY.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>نام مشتری اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12">
+    <label for="txt-user-mobile">مبایل</label>
+    <input type="text"
+      id="txt-user-mobile"
+      formControlName="MOBILE"
+      pInputText
+      [ngClass]="[this.customerForm.controls.MOBILE.invalid && (this.customerForm.controls.MOBILE.dirty || this.customerForm.controls.MOBILE.touched)  ?'ng-invalid ng-dirty':'']"
+      [(ngModel)]="customer.MOBILE"/>
+    <div
+      *ngIf="this.customerForm.controls.MOBILE.invalid && (this.customerForm.controls.MOBILE.dirty || this.customerForm.controls.MOBILE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+
+      <div *ngIf="this.customerForm.controls.MOBILE.errors?.required" >
+        <i class="bi bi-exclamation-circle"></i> شماره تماس اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-md-12"></div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!customerForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="onCloseMe($event)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>
+
+<p-toast position="bottom-left"></p-toast>

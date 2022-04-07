@@ -1,0 +1,155 @@
+
+<div class="p-field p-col-12">
+  <form [formGroup]="receiveForm" class="exchange-component p-fluid p-formgrid p-grid" (submit)="onSaveTransaction()">
+
+    <div class="p-field p-col-12 p-md-4" [@fadeInOnEnter] >
+      <label >سفارشات ارسالی</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonOrders" [@fadeInOnEnter]></p-skeleton>
+      <p-autoComplete field="Full_TITLE"
+                      *ngIf="!skeletonOrders"
+                      [@fadeInOnEnter]
+                      [suggestions]="filterOrder"
+                      (completeMethod)="searchOrder($event)"
+                      [minLength]=1
+                      (onSelect)="getOrderTransaction($event)"
+                      [(ngModel)]="selectedOrder"
+                      [ngModelOptions]="{standalone: true}"
+                      [ngClass]="[this.receiveForm.controls.ID.invalid && (this.receiveForm.controls.ID.dirty || this.receiveForm.controls.ID.touched)  ?'ng-invalid ng-dirty':'']"
+
+      >
+        <ng-template let-order pTemplate="item">
+          <div class="country-item">
+            <div>{{order.Full_TITLE}}</div>
+          </div>
+        </ng-template>
+      </p-autoComplete>
+      <div
+        *ngIf="this.receiveForm.controls.ID.invalid && (this.receiveForm.controls.ID.dirty || this.receiveForm.controls.ID.touched)"
+        [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+        <div *ngIf="this.receiveForm.controls.ID.errors?.required" [@fadeInOnEnter]>
+          <i class="bi bi-exclamation-circle"></i> سفارشات اجباری است.
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+      <label >قیمت هر گرم</label>
+      <p-inputNumber
+                     mode="decimal"
+                     [(ngModel)]="gramPrice"
+                     dir="ltr"
+                     class="p-text-left"
+                     (onInput)="onChangeGramPrice($event)"
+                     formControlName="GRAM_PRICE"></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label>اختلاف وزن</label>
+      <p-inputNumber mode="decimal"
+                     [maxFractionDigits]="4"
+                     [minFractionDigits]="1"
+                     dir="ltr"
+                     class="p-text-left"
+                     formControlName="DIFFERENT_WEIGHT"></p-inputNumber>
+    </div>
+
+
+    <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+      <label >نوع طلا</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonGoldType" [@fadeInOnEnter]></p-skeleton>
+      <p-dropdown *ngIf="!skeletonGoldType" placeholder="انتخاب نوع طلا"
+                  [filter]="true"
+                  [options]="goldType"
+                  [(ngModel)]="selectedGoldType"
+                  formControlName="DOM_ID_GOLD_TYPE"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field p-col-12 p-md-4" [@fadeInOnEnter]>
+      <label>مبلغ طلا</label>
+      <p-inputNumber
+                     dir="ltr"
+                     class="p-text-left"
+                     mode="decimal"
+                     formControlName="GOLD_PRICE"></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label >تاریخ دریافت</label>
+      <ngx-jdatepicker
+        mode="day"
+        dir="rtl"
+        theme="dp-material"
+        [config]="datePickerConfig"
+        [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="selectedSettlementDates"
+        (onChange)="selectedSettlementDate($event)"
+        [ngClass]="[this.receiveForm.controls.SETTLEMENT_DATE.invalid && (this.receiveForm.controls.SETTLEMENT_DATE.dirty || this.receiveForm.controls.SETTLEMENT_DATE.touched)  ?'ng-invalid ng-dirty':'']"
+      ></ngx-jdatepicker>
+      <div
+        *ngIf="this.receiveForm.controls.SETTLEMENT_DATE.invalid && (this.receiveForm.controls.SETTLEMENT_DATE.dirty || this.receiveForm.controls.SETTLEMENT_DATE.touched)"
+        [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+        <div *ngIf="this.receiveForm.controls.SETTLEMENT_DATE.errors?.required" [@fadeInOnEnter]>
+          <i class="bi bi-exclamation-circle"></i> تاریخ دریافت اجباری است.
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+      <label>قیمت کل</label>
+      <p-inputNumber
+                     dir="ltr"
+                     class="p-text-left"
+                     mode="decimal"
+                     [ngClass]="[this.receiveForm.controls.TOTAL_AMOUNT.invalid && (this.receiveForm.controls.TOTAL_AMOUNT.dirty || this.receiveForm.controls.TOTAL_AMOUNT.touched)  ?'ng-invalid ng-dirty':'']"
+                     formControlName="TOTAL_AMOUNT"></p-inputNumber>
+      <div
+        *ngIf="this.receiveForm.controls.TOTAL_AMOUNT.invalid && (this.receiveForm.controls.TOTAL_AMOUNT.dirty || this.receiveForm.controls.TOTAL_AMOUNT.touched)"
+        [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+        <div *ngIf="this.receiveForm.controls.TOTAL_AMOUNT.errors?.required" [@fadeInOnEnter]>
+          <i class="bi bi-exclamation-circle"></i> قیمت کل اجباری است.
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <label>&nbsp;</label>
+      <button pButton pRipple type="button"
+              (click)="display=!display"
+              [disabled]="!isSave"
+              label="اطلاعات پرداخت" class="p-button-warning"
+              icon="bi bi-check2-circle" iconPos="left"></button>
+    </div>
+
+    <div class="p-hidden-xs-down p-md-3"></div>
+
+    <div class="p-hidden-xs-down p-md-3"></div>
+
+    <div class="p-field p-col-12 p-md-3">
+      <button pButton pRipple type="submit" label="ثبت تبادل"
+              [loading]="isLoading"
+              [disabled]="isSave || receiveForm.invalid" class="p-button-success" icon="bi bi-save"
+              iconPos="left"></button>
+    </div>
+
+    <div class="p-field p-col-12 p-md-3">
+      <button pButton pRipple type="button" label="منصرف شدم" (click)="resetFrom()" class="p-button-outlined p-button-danger"
+              icon="bi bi-x-square" iconPos="left"></button>
+    </div>
+  </form>
+</div>
+
+
+
+<p-toast position="bottom-left"></p-toast>
+
+<!-- Modal -->
+<p-dialog header="" [modal]="true" [style]="{width: '90%'}" [(visible)]="display">
+  <ng-template pTemplate="header">
+    دریافت / پرداخت
+  </ng-template>
+  <app-payment [transactionId]="transactionId" (closeMe)="display=!$event"></app-payment>
+</p-dialog>

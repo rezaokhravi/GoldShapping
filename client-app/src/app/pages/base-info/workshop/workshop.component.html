@@ -1,0 +1,72 @@
+<div class="exchange-component p-fluid p-formgrid p-grid">
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="createWorkshop()"  label="افزودن کارگاه" class="p-button-success" icon="bi bi-plus" iconPos="left" ></button>
+  </div>
+
+  <div class="p-field p-col-12">
+    <p-card>
+      <p-table #dt
+               [value]="workshops"
+               [rows]="10"
+               [paginator]="true"
+               [globalFilterFields]="['TITLE','RESPONSIBLE_NAME','PHONE_ONE','PHONE_TOW','ADDRESS']"
+               [(selection)]="selectedWorkshop"
+               [rowHover]="true"
+               [scrollable]="true"
+               [rowsPerPageOptions]="[10,25,50]"
+               [loading]="loading"
+               dataKey="id"
+               scrollDirection="both"
+
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between p-grid">
+            <h5 class="p-col-12 p-md-2">لیست کارگاه ها</h5>
+            <div class="p-col-12 p-md-10 ">
+          <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="search($event,dt)" placeholder="جستجو..." />
+          </span>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:150px" ></th>
+            <th style="width:200px" pSortableColumn="TITLE">عنوان <p-sortIcon field="TITLE"></p-sortIcon></th>
+            <th style="width:200px" pSortableColumn="RESPONSIBLE_NAME">نام مسئول <p-sortIcon field="RESPONSIBLE_NAME"></p-sortIcon></th>
+            <th style="width:200px" pSortableColumn="ADDRESS">آدرس<p-sortIcon field="ADDRESS"></p-sortIcon></th>
+            <th style="width:200px" pSortableColumn="PHONE_ONE">شماره تماس 1<p-sortIcon field="PHONE_ONE"></p-sortIcon></th>
+            <th style="width:200px" pSortableColumn="PHONE_TOW">شماره تماس 2<p-sortIcon field="PHONE_TOW"></p-sortIcon></th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-workshop>
+          <tr>
+            <td style="width:150px" class="p-d-flex p-jc-evenly">
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-sm " (click)="editWorkshop(workshop)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning p-button-sm p-mr-lg-2 p-mr-md-2 " (click)="deleteWorkshop(workshop)"></button>
+            </td>
+            <td style="width:200px">{{workshop.TITLE}}</td>
+            <td style="width:200px">{{workshop.RESPONSIBLE_NAME}}</td>
+            <td style="width:200px">{{workshop.ADDRESS}}</td>
+            <td style="width:200px">{{workshop.PHONE_ONE}}</td>
+            <td style="width:200px">{{workshop.PHONE_TOW}}</td>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="flex: 1 1 auto; justify-content: flex-start">اطلاعاتی جهت نمایش وجود ندارد</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+
+</div>
+
+<p-toast position="bottom-left"></p-toast>

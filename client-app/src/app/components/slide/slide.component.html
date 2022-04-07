@@ -1,0 +1,293 @@
+
+<div class="slide" [ngClass]="{'slide-close':!variable.toggleMenu.getValue()}">
+
+  <div class="nav-icon nav-bar"  (click)="variable.toggleMenu.next(!variable.toggleMenu.getValue())">
+    <i class="bi bi-list" [ngClass]="[variable.toggleMenu.getValue()?'bi-x':'bi-list']"></i>
+  </div>
+
+  <div class="loading" *ngIf="loading" [@fadeInOnEnter] >
+    <img src="assets/images/svg/loading.svg" >
+    <p>صبر کنید...</p>
+  </div>
+
+  <nav *ngIf="!loading" [@fadeInOnEnter] [ngStyle]="styles()">
+    <ul>
+      <li *ngFor="let menu of menus">
+
+
+        <a *ngIf="menu.CHILD?.length<=0;else subMenus"
+          [routerLink]="[menu.ROUTE]"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+           [routerLinkActiveOptions]="{exact:menu.IS_ROUTER_ACTIVE}"
+        >
+          <div class="nav-icon" pTooltip="{{menu.TITLE}}" >
+            <i class="{{menu.ICON}}"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>{{menu.TITLE}}</p>
+          </div>
+        </a>
+
+        <ng-template #subMenus>
+          <a class="submenu" (click)="displaySubmenu=!displaySubmenu">
+            <div class="submenu_header" >
+              <div class="nav-icon" pTooltip="{{menu.TITLE}}" >
+                <i class="{{menu.ICON}}"></i>
+              </div>
+              <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter]  >
+                <p>{{menu.TITLE}}</p>
+              </div>
+              <div class="caret-icon" pTooltip="{{menu.TITLE}}"  [ngClass]="{'open-caret':displaySubmenu}">
+                <i class="bi bi-caret-left" ></i>
+              </div>
+            </div>
+            <ul  class="display-submenu" *ngIf="displaySubmenu" [@fadeInOnEnter] [@fadeOutOnLeave]>
+              <li *ngFor="let submenu of menu.CHILD">
+                <a
+                  [routerLink]="[submenu.ROUTE]"
+                   (click)="onClickMenu()"
+                   routerLinkActive="active-menu"
+                   [routerLinkActiveOptions]="{exact:submenu.IS_ROUTER_ACTIVE}"
+                >
+                  <div class="nav-icon" pTooltip="{{submenu.TITLE}}" >
+                    <i class="{{submenu.ICON}}"></i>
+                  </div>
+                  <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+                    <p>{{submenu.TITLE}}</p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </a>
+
+        </ng-template>
+
+      </li>
+    </ul>
+  </nav>
+
+</div>
+
+<p-toast position="bottom-left"></p-toast>
+
+<!--
+  <nav>
+    <ul>
+      <li>
+        <a [routerLink]="['dashbord']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+           [routerLinkActiveOptions]="{exact:true}"
+        >
+          <div class="nav-icon" pTooltip="داشبورد" >
+            <i class="bi bi-house-fill"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>داشبورد</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['customers']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+        >
+          <div class="nav-icon" pTooltip="مشتریان" >
+            <i class="bi bi-file-person-fill"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>مشتریان</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['wholesaler']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+        >
+          <div class="nav-icon" pTooltip="بنکدار" >
+            <i class="bi bi-pin-map-fill"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>بنکدار</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['workshop']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+        >
+          <div class="nav-icon" pTooltip="کارگاه" >
+            <i class="bi bi-shop"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>کارگاه</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['goods']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+        >
+          <div class="nav-icon" pTooltip="مدیریت کالا" >
+            <i class="bi bi-inboxes-fill"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>مدیریت کالا</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['cash']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+        >
+          <div class="nav-icon"  pTooltip="صندوق">
+            <i class="bi bi-cash-coin"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>صندوق</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['storage']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+        >
+          <div class="nav-icon" pTooltip="انبار" >
+            <i class="bi bi-box-seam"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>انبار</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="['exchanges']"
+          (click)="onClickMenu()"
+          routerLinkActive="active-menu"
+        >
+          <div class="nav-icon" pTooltip="تبادلات" >
+            <i class="bi bi-arrow-repeat"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>تبادلات</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['users']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+        >
+          <div class="nav-icon" pTooltip="کاربران" >
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>کاربران</p>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['menus']"
+           (click)="onClickMenu()"
+           routerLinkActive="active-menu"
+        >
+          <div class="nav-icon" pTooltip="منو ها" >
+            <i class="bi bi-menu-app"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>منو ها</p>
+          </div>
+        </a>
+      </li>
+      <li class="submenu">
+
+        <a>
+          <div class="nav-icon" pTooltip="گزارشات" >
+            <i class="bi bi-file-text"></i>
+          </div>
+          <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+            <p>گزارشات</p>
+          </div>
+        </a>
+
+        <ul>
+          <li>
+            <a [routerLink]="['customerReport']"
+               (click)="onClickMenu()"
+               routerLinkActive="active-menu"
+            >
+              <div class="nav-icon" pTooltip="مشتری ها" >
+                <i class="bi bi-file-text-fill"></i>
+              </div>
+              <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+                <p>مشتری ها</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['goldCardReport']"
+               (click)="onClickMenu()"
+               routerLinkActive="active-menu"
+            >
+              <div class="nav-icon" pTooltip="کارت طلا" >
+                <i class="bi bi-file-text-fill"></i>
+              </div>
+              <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+                <p>کارت طلا</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['workshopReport']"
+               (click)="onClickMenu()"
+               routerLinkActive="active-menu"
+            >
+              <div class="nav-icon" pTooltip="کارگاه" >
+                <i class="bi bi-file-text-fill"></i>
+              </div>
+              <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+                <p>کارگاه</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['wholesalerReport']"
+               (click)="onClickMenu()"
+               routerLinkActive="active-menu"
+            >
+              <div class="nav-icon" pTooltip="بنکداران" >
+                <i class="bi bi-file-text-fill"></i>
+              </div>
+              <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+                <p>بنکداران</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['transactionReport']"
+               (click)="onClickMenu()"
+               routerLinkActive="active-menu"
+            >
+              <div class="nav-icon" pTooltip="خرید و فروش" >
+                <i class="bi bi-file-text-fill"></i>
+              </div>
+              <div class="nav-title" *ngIf="variable.toggleMenu.getValue()" [@fadeInOnEnter] >
+                <p>خرید و فروش</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+
+
+
+      </li>
+    </ul>
+  </nav>
+  -->

@@ -1,0 +1,41 @@
+
+
+<!-- slide -->
+  <app-slide *ngIf="!variable.showLogin.getValue()"></app-slide>
+
+
+<!-- main -->
+<div class="main" [ngClass]="{'main-open':!variable.toggleMenu.getValue(),'showLogin':variable.showLogin.getValue()}" >
+
+  <div class="float-loading" *ngIf="variable.displayFloatLoading.getValue()" [@fadeInOnEnter] [@fadeOutOnLeave] >
+    <div class="loading">
+      <img src="assets/images/svg/loading.svg" >
+      <p>صبر کنید...</p>
+    </div>
+  </div>
+
+  <app-heade *ngIf="!variable.showLogin.getValue()"></app-heade>
+
+  <router-outlet name="logins"  [@fadeInOnEnter]  ></router-outlet>
+  <!-- content -->
+  <div class="form-body"  >
+
+    <router-outlet #o="outlet"  [@fadeInOnEnter]  >
+      <div class="shadow" *ngIf="variable.toggleMenu.getValue()" (click)="variable.toggleMenu.next(false)"  [@fadeInOnEnter] [@fadeOutOnLeave]></div>
+    </router-outlet>
+  </div>
+
+
+  <app-footer></app-footer>
+
+</div>
+
+<div class="hero">
+  <div class="hero__title"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+</div>

@@ -1,0 +1,29 @@
+<div class="exchange-component p-fluid p-formgrid p-grid">
+  <br>
+  <br>
+  <div class="p-col-12">
+  <p-card>
+    <div class="p-formgrid p-grid">
+      <div class="p-col-12 p-md-1 p-d-flex p-jc-center p-align-center">
+        <i style="font-size: 5em;color: maroon" class="bi bi-shield-fill-exclamation"></i>
+      </div>
+      <div class="p-col-12 p-md-10 ">
+        <h3 style="color:grey">
+          کاربر گرامی شما فاقد دسترسی لازم جهت استفاده از سامانه هستید !!!
+        </h3>
+        <br>
+        <h5 style="color:darkgrey">
+          لطفا بعد از کسب دسترسی های لازم از سامانه خارج شده و مجدد وارد شوید.
+        </h5>
+      </div>
+      <div class=" p-col-12 p-md-1 p-d-flex p-jc-center p-align-center">
+        <i  pTooltip="خروج از سامانه" style="font-size: 5em;color: #004d80" class="bi bi-door-open" (click)="logOut()"></i>
+      </div>
+    </div>
+  </p-card>
+  </div>
+  <br>
+  <br>
+</div>
+
+<p-toast position="bottom-left"></p-toast>

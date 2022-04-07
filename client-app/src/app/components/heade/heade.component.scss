@@ -1,0 +1,118 @@
+:host ::ng-deep header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+
+    .logo {
+      padding: 0 0 0 0.5rem;
+      color: var(--logo-color);
+    }
+
+    .brand {
+      p {
+        color: var(--gray-color);
+        font-size: 10px;
+      }
+    }
+  }
+
+  .header-center {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+
+    .search {
+      position: relative;
+
+      input[type="text"] {
+        border: none;
+        padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+        text-overflow: ellipsis;
+        width: 350px;
+        border-radius: 2pc;
+        border: 1px solid #fff;
+        font-family: var(--primary-font-family);
+
+        &:focus-visible {
+          border-radius: 2pc;
+          border: 1px solid var(--logo-color);
+          outline: transparent;
+        }
+      }
+
+      i {
+        position: absolute;
+        left: 0;
+        width: 20px;
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        color: var(--gray-color);
+        font-size: 14px;
+
+        &:hover {
+          color: var(--logo-color);
+        }
+      }
+    }
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    justify-content: space-evenly;
+
+    .user-profile {
+      display: flex;
+    }
+  }
+}
+
+:host ::ng-deep .popup-user-profile{
+  width: 550px !important;
+  margin-top:0 !important;
+  z-index:10000 !important;
+  .p-overlaypanel .p-overlaypanel-content{
+    z-index:10;
+  }
+}
+
+::ng-deep .p-overlaypanel{
+  z-index:10;
+}
+
+
+
+
+/* On screens that are 576px or less, set the background color to olive */
+@media screen and (max-width: 576px) {
+
+  :host ::ng-deep header {
+    position: fixed;
+    width: 100%;
+    background-color: var(--body-background-color);
+    z-index: 100;
+
+    .header-right {
+      margin-right: 35px;
+    }
+
+    .header-center {
+      display: none;
+    }
+
+    .header-left {
+      .user-profile {
+        display: none;
+      }
+    }
+  }
+}
+

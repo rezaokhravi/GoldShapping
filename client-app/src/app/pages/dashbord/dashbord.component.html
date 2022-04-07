@@ -1,0 +1,303 @@
+<div class="exchange-component p-fluid p-formgrid p-grid dashbord-wave">
+
+  <div class="p-field p-col-12 p-md-7">
+    <p-card class="p-card-bg">
+
+      <footer>
+        <svg viewBox="0 0 120 28">
+          <defs>
+            <mask id="xxx">
+              <circle cx="7" cy="12" r="40" fill="#fff" />
+            </mask>
+
+            <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+              <feColorMatrix in="blur" mode="matrix" values="
+           1 0 0 0 0
+           0 1 0 0 0
+           0 0 1 0 0
+           0 0 0 13 -9" result="goo" />
+              <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+            <path id="wave" d="M 0,10 C 30,10 30,15 60,15 90,15 90,10 120,10 150,10 150,15 180,15 210,15 210,10 240,10 v 28 h -240 z" />
+          </defs>
+
+          <use id="wave3" class="wave" xlink:href="#wave" x="0" y="-2" ></use>
+          <use id="wave2" class="wave" xlink:href="#wave" x="0" y="0" ></use>
+          <g class="gooeff">
+            <circle class="drop drop1" cx="20" cy="2" r="1.8"  />
+            <circle class="drop drop2" cx="25" cy="2.5" r="1.5"  />
+            <circle class="drop drop3" cx="16" cy="2.8" r="1.2"  />
+            <use id="wave1" class="wave" xlink:href="#wave" x="0" y="1" />
+          </g>
+        </svg>
+
+      </footer>
+
+      <div class="card-main p-formgrid p-grid">
+        <div  class="p-col-12"   *ngIf="skeletonTransToDay" [@fadeInOnEnter]>
+          <p-skeleton width="100%" height="150px" borderRadius="3px" ></p-skeleton>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-4 p-xl-3 p-align-center p-jc-center dashbord-chart-data" style="display: grid"  *ngIf="!skeletonTransToDay" [@fadeInOnEnter]>
+          <p-chart type="doughnut" [data]="transToDay" width="150px" height="150px" [responsive]="false" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+        </div>
+        <div  class="p-col-12 p-md-6 p-lg-8 p-xl-9 dashbord-chart-title p-center"  *ngIf="!skeletonTransToDay" [@fadeInOnEnter]>
+
+          <div class="p-d-flex p-align-center p-jc-between p-flex-wrap">
+            <span class="p-field">
+              خرید امروز
+              &nbsp;
+              <i class="bi bi-caret-left-fill"></i>
+            </span>
+            <span class="p-field">{{transactionToDay.purchase_weight | mask: 'separator':','}} گرم </span>
+            <span class="p-field">{{transactionToDay.purchase_price | mask: 'separator':','}} تومان </span>
+          </div>
+          <p-divider class="p-field p-col-12" type="dashed"></p-divider>
+          <div class="p-d-flex p-align-center p-jc-between p-flex-wrap">
+            <span class="p-field">
+              فروش امروز
+              &nbsp;
+              <i class="bi bi-caret-left-fill"></i>
+            </span>
+            <span class="p-field">{{transactionToDay.sale_weight | mask: 'separator':','}} گرم </span>
+            <span class="p-field">{{transactionToDay.sale_price | mask: 'separator':','}} تومان </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </p-card>
+  </div>
+
+  <div class="p-field p-col-12 p-md-5">
+    <p-card>
+      <div class="p-d-flex dashbord-chart p-jc-between p-align-center ">
+        <div class="dashbord-chart-title">
+          <h6 class="p-field dashbord-header-title"> میزان خرید و فروش (7روزه)</h6>
+          <p class="dashbord-item-title">میزان خرید و فروش</p>
+        </div>
+        <div class="dashbord-chart-data">
+          <p-skeleton width="150px" height="150px" borderRadius="3px" *ngIf="skeletonTransaction" [@fadeInOnEnter]></p-skeleton>
+          <p-chart *ngIf="!skeletonTransaction" [@fadeInOnEnter]
+                   type="doughnut"
+                   [data]="transaction"
+                   width="150px" height="150px"
+                   [responsive]="false"
+                   [options]="chartOptions"
+                   [style]="{'width': '40%'}"></p-chart>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="p-field p-col-12 p-md-4">
+    <p-card>
+        <div class="p-d-flex dashbord-chart p-jc-between p-align-center ">
+          <div class="dashbord-chart-title">
+            <h6 class="p-field dashbord-header-title">موجودی طلا</h6>
+            <p class="dashbord-item-title">موجودی / بدهکاری</p>
+          </div>
+          <div class="dashbord-chart-data">
+            <p-skeleton width="150px" height="150px" borderRadius="3px" *ngIf="skeletonGoldCreature" [@fadeInOnEnter]></p-skeleton>
+            <p-chart *ngIf="!skeletonGoldCreature" [@fadeInOnEnter]
+                     type="doughnut"
+                     [data]="goldCreature"
+                     width="150px" height="150px"
+                     [responsive]="false"
+                     [options]="chartOptions"
+                     [style]="{'width': '40%'}"></p-chart>
+          </div>
+        </div>
+    </p-card>
+  </div>
+
+  <div class="p-field p-col-12 p-md-4">
+    <p-card>
+      <div class="p-d-flex dashbord-chart p-jc-between p-align-center ">
+        <div class="dashbord-chart-title">
+          <h6 class="p-field dashbord-header-title">سفارشات (30 روزه)</h6>
+          <p class="dashbord-item-title">ارسالی / دریافتی</p>
+        </div>
+        <div class="dashbord-chart-data">
+          <p-skeleton width="150px" height="150px" borderRadius="3px" *ngIf="skeletonOrders" [@fadeInOnEnter]></p-skeleton>
+          <p-chart
+            *ngIf="!skeletonOrders" [@fadeInOnEnter]
+            type="doughnut"
+            [data]="orders"
+            width="150px" height="150px"
+            [responsive]="false"
+            [options]="chartOptions"
+            [style]="{'width': '40%'}"></p-chart>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="p-field p-col-12 p-md-4">
+    <p-card>
+      <div class="p-d-flex dashbord-chart p-jc-between p-align-center ">
+        <div class="dashbord-chart-title">
+          <h6 class="p-field dashbord-header-title">کارت طلا</h6>
+          <p class="dashbord-item-title">حساب ریالی / طلا</p>
+        </div>
+        <div class="dashbord-chart-data">
+          <p-skeleton width="150px" height="150px" borderRadius="3px" *ngIf="skeletonGoldCard" [@fadeInOnEnter]></p-skeleton>
+          <p-chart
+            *ngIf="!skeletonGoldCard" [@fadeInOnEnter]
+            type="doughnut"
+            [data]="goldCard"
+            width="150px" height="150px"
+            [responsive]="false"
+            [options]="chartOptions"
+            [style]="{'width': '40%'}"></p-chart>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <p-card>
+      <div class="p-formgrid p-grid">
+        <div class="p-col-12">
+          <div class="dashbord-header-title p-d-flex p-align-center">
+            <i class="bi bi-inbox-fill"></i>
+            <h6>موجودی انبار</h6>
+          </div>
+        </div>
+        <p-divider class="p-col-12" type="dashed"></p-divider>
+
+        <div class="p-field p-col-12" *ngIf="skeletonStorageCreature" [@fadeInOnEnter]>
+          <p-skeleton width="100%" height="150px" borderRadius="3px" *ngIf="skeletonStorageCreature" [@fadeInOnEnter]></p-skeleton>
+        </div>
+
+        <div class="p-field p-col-12 p-md-6 p-text-center p-d-flex p-jc-between" *ngIf="!skeletonStorageCreature" [@fadeInOnEnter]>
+          <div>
+            <span class="dashbord-item-title">موجودی طلا : </span>
+          </div>
+          <div>
+            <span class="dashbord-price">{{storageCreature.gold_creature | mask: 'separator':','}}</span>
+            <span class="dashbord-price"> ت</span>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-6 p-text-center p-d-flex p-jc-between" *ngIf="!skeletonStorageCreature" [@fadeInOnEnter]>
+          <div>
+            <span class="dashbord-item-title">خالص طلا : </span>
+          </div>
+          <div>
+            <span class="dashbord-price">{{storageCreature.gold_pure | mask: 'separator':','}}</span>
+            <span class="dashbord-price"> ت</span>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-6 p-text-center p-d-flex p-jc-between" *ngIf="!skeletonStorageCreature" [@fadeInOnEnter]>
+          <div>
+            <span class="dashbord-item-title">بدهکاری طلا : </span>
+          </div>
+          <div>
+            <span class="dashbord-price">{{storageCreature.gold_debt | mask: 'separator':','}}</span>
+            <span class="dashbord-price"> ت</span>
+          </div>
+        </div>
+
+      </div>
+    </p-card>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <p-card>
+
+      <div class="p-formgrid p-grid">
+
+        <div class="p-col-12">
+          <div class="dashbord-header-title p-d-flex p-align-center">
+            <i class="bi bi-currency-exchange"></i>
+            <h6>موجودی صندوق</h6>
+          </div>
+        </div>
+        <p-divider class="p-col-12" type="dashed"></p-divider>
+
+        <div class="p-field p-col-12" *ngIf="skeletonCashCreature" [@fadeInOnEnter]>
+          <p-skeleton width="100%" height="150px" borderRadius="3px" ></p-skeleton>
+        </div>
+
+        <div class="p-field p-col-12 p-md-6 p-text-center p-d-flex p-jc-between" *ngIf="!skeletonCashCreature" [@fadeInOnEnter]>
+          <div>
+            <span class="dashbord-item-title">موجودی نقدی : </span>
+          </div>
+          <div>
+            <span class="dashbord-price">{{cashCreature.cash_creature | mask: 'separator':','}}</span>
+            <span class="dashbord-price"> ت</span>
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-md-6 p-text-center p-d-flex p-jc-between"  *ngIf="!skeletonCashCreature" [@fadeInOnEnter]>
+          <div>
+            <span class="dashbord-item-title">بدهکاری نقدی : </span>
+          </div>
+          <div>
+            <span class="dashbord-price">{{cashCreature.cash_debt | mask: 'separator':','}}</span>
+            <span class="dashbord-price"> ت</span>
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-md-6 p-text-center p-d-flex p-jc-between"  *ngIf="!skeletonCashCreature" [@fadeInOnEnter]>
+          <div>
+            <span class="dashbord-item-title">موجودی چک ها : </span>
+          </div>
+          <div>
+            <span class="dashbord-price">{{cashCreature.check_creature | mask: 'separator':','}}</span>
+            <span class="dashbord-price"> ت</span>
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-md-6 p-text-center p-d-flex p-jc-between"  *ngIf="!skeletonCashCreature" [@fadeInOnEnter]>
+          <div>
+            <span class="dashbord-item-title">موجودی خالص : </span>
+          </div>
+          <div>
+            <span class="dashbord-price">{{cashCreature.pure_creature | mask: 'separator':','}}</span>
+            <span class="dashbord-price"> ت</span>
+          </div>
+        </div>
+
+      </div>
+
+    </p-card>
+  </div>
+
+
+  <div class="p-field p-col-12">
+    <p-card>
+
+      <div class="p-formgrid p-grid">
+
+        <div class="p-col-12">
+          <div class="dashbord-header-title p-d-flex p-align-center">
+            <i class="bi bi-inboxes-fill"></i>
+            <h6>موجودی کالا</h6>
+          </div>
+        </div>
+        <p-divider class="p-col-12" type="dashed"></p-divider>
+
+        <div class="p-field p-col-12" *ngIf="skeletonGoodCreature" [@fadeInOnEnter]>
+          <p-skeleton width="100%" height="150px" borderRadius="3px" ></p-skeleton>
+        </div>
+      <ng-container *ngIf="!skeletonGoodCreature">
+        <div class="p-field p-col-12 p-md-3 p-text-center p-d-flex p-jc-between" *ngFor="let item of this.goodCreature" [@fadeInOnEnter]>
+
+          <div>
+            <span class="dashbord-item-title">{{item.storage_Title}} / {{item.good_Title}} :</span>
+          </div>
+          <div>
+            <span class="dashbord-price">{{item.counts | mask: 'separator':','}}</span>
+            <span class="dashbord-price"> عدد </span>
+          </div>
+        </div>
+      </ng-container>
+
+
+      </div>
+
+    </p-card>
+  </div>
+
+</div>

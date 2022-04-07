@@ -1,0 +1,57 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="storageForm" (ngSubmit)="saveStorage()">
+  <div class="p-field p-col-12 p-md-6">
+    <label for="title-storage">عنوان</label>
+    <input type="text"
+           id="title-storage"
+           [ngClass]="[this.storageForm.controls.TITLE.invalid && (this.storageForm.controls.TITLE.dirty || this.storageForm.controls.TITLE.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="TITLE"
+           pInputText
+           [(ngModel)]="storeroom.TITLE"/>
+    <div
+      *ngIf="this.storageForm.controls.TITLE.invalid && (this.storageForm.controls.TITLE.dirty || this.storageForm.controls.TITLE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+
+      <div *ngIf="this.storageForm.controls.TITLE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان انبار اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="drp-domIdType-storage">نوع انبار</label>
+    <p-dropdown inputId="drp-domIdType-storage" placeholder="انتخاب کنید..."
+                appendTo="body"
+                [filter]="true"
+                [options]="domStorageType"
+                [(ngModel)]="storeroom.DOM_ID_TYPE"
+                [ngClass]="[this.storageForm.controls.DOM_ID_TYPE.invalid && (this.storageForm.controls.DOM_ID_TYPE.dirty || this.storageForm.controls.DOM_ID_TYPE.touched)  ?'ng-invalid ng-dirty':'']"
+                formControlName="DOM_ID_TYPE"
+    ></p-dropdown>
+
+    <div
+      *ngIf="this.storageForm.controls.DOM_ID_TYPE.invalid && (this.storageForm.controls.DOM_ID_TYPE.dirty || this.storageForm.controls.DOM_ID_TYPE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+
+      <div *ngIf="this.storageForm.controls.DOM_ID_TYPE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>نوع انبار اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="p-field p-md-6"></div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!storageForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>

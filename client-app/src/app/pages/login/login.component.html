@@ -1,0 +1,65 @@
+
+
+<div class="p-field p-col-12 center-from" >
+
+  <p-card class="bg-card-logo">
+    <ng-template pTemplate="header">
+      <div class="logo"  style="background-image: url('assets/images/webp/logo.webp')"></div>
+    </ng-template>
+    <form [formGroup]="loginForm" class="login-component p-fluid p-formgrid p-grid" (submit)="onSubmit()">
+
+      <div class="p-field p-col-12">
+        <label >نام کاربری</label>
+        <input type="text"
+               [ngClass]="[this.loginForm.controls.USER.invalid && (this.loginForm.controls.USER.dirty || this.loginForm.controls.USER.touched)  ?'ng-invalid ng-dirty':'']"
+               required
+               formControlName="USER"
+               pInputText
+        />
+        <div
+          *ngIf="this.loginForm.controls.USER.invalid && (this.loginForm.controls.USER.dirty || this.loginForm.controls.USER.touched)"
+          [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+          <div *ngIf="this.loginForm.controls.USER.errors?.required" [@fadeInOnEnter]>
+            <i class="bi bi-exclamation-circle"></i>نام کاربری اجباری است.
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="p-field p-col-12">
+        <label>کلمه عبور</label>
+        <p-password required
+                    formControlName="PASSWORD"
+                    [toggleMask]="true"
+                    [ngClass]="[this.loginForm.controls.PASSWORD.invalid && (this.loginForm.controls.PASSWORD.dirty || this.loginForm.controls.PASSWORD.touched)  ?'ng-invalid ng-dirty':'']"
+        ></p-password>
+        <div
+          *ngIf="this.loginForm.controls.PASSWORD.invalid && (this.loginForm.controls.PASSWORD.dirty || this.loginForm.controls.PASSWORD.touched)"
+          [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+          <div *ngIf="this.loginForm.controls.PASSWORD.errors?.required" [@fadeInOnEnter]>
+            <i class="bi bi-exclamation-circle"></i>کلمه عبور اجباری است.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="p-field p-col-12">
+        <button pButton pRipple
+                type="submit"
+                label="ورود"
+                [disabled]="this.loginForm.invalid"
+                class="p-button-gold"
+                icon="bi bi-save"
+                iconPos="left"></button>
+      </div>
+    </form>
+  </p-card>
+
+
+</div>
+
+<p-toast position="bottom-left"></p-toast>
+

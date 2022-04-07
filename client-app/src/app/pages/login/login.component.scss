@@ -1,0 +1,40 @@
+
+:host ::ng-deep .center-from {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+:host ::ng-deep .login-component {
+  width: 20rem;
+  label{
+    color: #000000;
+  }
+
+}
+
+:host ::ng-deep .bg-card-logo {
+  .p-card {
+    background-color: #fcfcfc;
+    .p-card-header{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .p-card-content{
+      padding: 0;
+    }
+  }
+
+  .logo {
+    margin-top: .5rem;
+    width: 210px;
+    height: 230px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+
+
+}

@@ -1,0 +1,82 @@
+<!-- header -->
+<header>
+  <div class="header-right">
+    <div class="logo">
+     <!-- <i class="bi bi-gem fs-0" ></i> -->
+      <img src="assets/images/webp/arm.webp" alt="" width="100">
+    </div>
+    <div class="brand">
+      <strong>طلا سازی یزدی</strong>
+      <p>سامانه مدیریت و انبارداری</p>
+    </div>
+  </div>
+  <div class="header-center">
+    <div class="search">
+      <input type="text" placeholder="جستجو در سامانه">
+      <i class="bi bi-search"></i>
+    </div>
+  </div>
+  <div class="header-left">
+    <div class="user-profile" (click)="op.toggle($event)" style="cursor: pointer">
+      <i class="bi bi-caret-down-fill ml-0" style="cursor: pointer" ></i>
+      <p class="ml-0" style="cursor: pointer">{{(this.auth.currentUser.getValue()?.NAME||'')  + ' ' + (this.auth.currentUser.getValue()?.FAMILY||'') }}</p>
+      <img *ngIf="!errorImage" [src]="pictureImage" style="overflow: hidden;border-radius: 3px cursor: pointer" width="25" height="30" (error)="onImgError($event)">
+      <i  *ngIf="errorImage" class="bi bi-person ml-0" style="color: #5f2b9a;font-size: 1.3rem cursor: pointer"></i>
+    </div>
+    <div class="bells">
+      <i class="bi bi-bell-fill" style="color: #2b579a;font-size: 1.3rem"></i>
+    </div>
+    <div class="settings" (click)="signOut()">
+      <i class="bi bi-door-closed-fill" style="color: red;font-size: 1.3rem" pTooltip="خروج" tooltipPosition="bottom"></i>
+    </div>
+  </div>
+</header>
+
+<p-overlayPanel #op [showCloseIcon]="true" [baseZIndex]="10000"  [autoZIndex]="false" class="popup-user-profile" >
+  <ng-template pTemplate>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class=" p-col-12 p-md-7">
+        <div class="p-field p-col-12">
+          <label>
+            <i class="bi bi-person"></i> &nbsp;:&nbsp;
+            <span>{{(this.auth.currentUser.getValue()?.NAME||'')  + ' ' + (this.auth.currentUser.getValue()?.FAMILY||'') }}</span>
+          </label>
+        </div>
+        <div class="p-field p-col-12">
+          <label>
+            <i class="bi bi-phone"></i> &nbsp;:&nbsp;
+            <span>{{this.auth.currentUser.getValue()?.MOBILE||''}}</span>
+          </label>
+        </div>
+        <div class="p-field p-col-12">
+          <label>
+            <i class="bi bi-mailbox"></i> &nbsp;:&nbsp;
+            <span>{{this.auth.currentUser.getValue()?.EMAIL||''}}</span>
+          </label>
+        </div>
+
+        <div class="p-field p-col-12">
+          <button pButton pRipple type="button" label="ویرایش مشخصات" class="p-button-outlined p-button-info"
+                  icon="bi bi-save" iconPos="left" (click)="editUser()"></button>
+        </div>
+        <div class="p-field p-col-12">
+          <span style="color: #990055">حداکثر حجم عکس 500kb می باشد .</span>
+        </div>
+      </div>
+      <div class=" p-col-12 p-md-5" style="overflow: hidden;border-radius: 3px">
+        <img [src]="pictureImage" style="overflow: hidden;border-radius: 3px" width="165" height="200">
+        <p-fileUpload #fileUpload
+                      mode="basic"
+                      name="pictureFile"
+                      accept=".jpeg"
+                      [customUpload]="true"
+                      [maxFileSize]="500000"
+                      (uploadHandler)="onUpload($event,fileUpload)"
+                      chooseLabel="آپلود"
+                      [auto]="true">
+        </p-fileUpload>
+      </div>
+    </div>
+  </ng-template>
+</p-overlayPanel>
+<p-toast position="bottom-left"></p-toast>

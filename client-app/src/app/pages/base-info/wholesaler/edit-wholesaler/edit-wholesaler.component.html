@@ -1,0 +1,104 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="wholesalerForm" (ngSubmit)="saveWholesaler()">
+  <div class="p-field p-col-12 p-md-6">
+    <label for="title-wholesaler">عنوان</label>
+    <input type="text"
+           id="title-wholesaler"
+           [ngClass]="[this.wholesalerForm.controls.TITLE.invalid && (this.wholesalerForm.controls.TITLE.dirty || this.wholesalerForm.controls.TITLE.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="TITLE"
+           pInputText
+           [(ngModel)]="wholesaler.TITLE"/>
+    <div
+      *ngIf="this.wholesalerForm.controls.TITLE.invalid && (this.wholesalerForm.controls.TITLE.dirty || this.wholesalerForm.controls.TITLE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.wholesalerForm.controls.TITLE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان بنکدار اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="responsibleName-wholesaler">نام مسئول</label>
+    <input type="text"
+           id="responsibleName-wholesaler"
+           [ngClass]="[this.wholesalerForm.controls.RESPONSIBLE_NAME.invalid && (this.wholesalerForm.controls.RESPONSIBLE_NAME.dirty || this.wholesalerForm.controls.RESPONSIBLE_NAME.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="RESPONSIBLE_NAME"
+           pInputText
+           [(ngModel)]="wholesaler.RESPONSIBLE_NAME"/>
+    <div
+      *ngIf="this.wholesalerForm.controls.RESPONSIBLE_NAME.invalid && (this.wholesalerForm.controls.RESPONSIBLE_NAME.dirty || this.wholesalerForm.controls.RESPONSIBLE_NAME.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.wholesalerForm.controls.RESPONSIBLE_NAME.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان مسئول اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="phoneOne-wholesaler">شماره تماس 1</label>
+    <p-inputMask
+           id="phoneOne-wholesaler"
+           [ngClass]="[this.wholesalerForm.controls.PHONE_ONE.invalid && (this.wholesalerForm.controls.PHONE_ONE.dirty || this.wholesalerForm.controls.PHONE_ONE.touched)  ?'ng-invalid ng-dirty':'']"
+           mask="99999999999"
+           formControlName="PHONE_ONE"
+           [(ngModel)]="wholesaler.PHONE_ONE"></p-inputMask>
+    <div
+      *ngIf="this.wholesalerForm.controls.PHONE_ONE.invalid && (this.wholesalerForm.controls.PHONE_ONE.dirty || this.wholesalerForm.controls.PHONE_ONE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.wholesalerForm.controls.PHONE_ONE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> شماره تماس اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="phoneTow-wholesaler">شماره تماس 2</label>
+    <p-inputMask
+           id="phoneTow-wholesaler"
+           formControlName="PHONE_TOW"
+           mask="99999999999"
+           [(ngModel)]="wholesaler.PHONE_TOW"></p-inputMask>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="address-wholesaler">آدرس</label>
+    <input type="text"
+           id="address-wholesaler"
+           [ngClass]="[this.wholesalerForm.controls.ADDRESS.invalid && (this.wholesalerForm.controls.ADDRESS.dirty || this.wholesalerForm.controls.ADDRESS.touched)  ?'ng-invalid ng-dirty':'']"
+           formControlName="ADDRESS"
+           pInputText
+           pInputText
+           [(ngModel)]="wholesaler.ADDRESS"/>
+    <div
+      *ngIf="this.wholesalerForm.controls.ADDRESS.invalid && (this.wholesalerForm.controls.ADDRESS.dirty || this.wholesalerForm.controls.ADDRESS.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.wholesalerForm.controls.ADDRESS.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>آدرس اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-md-6"></div>
+  <div class="p-field p-md-6"></div>
+
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!wholesalerForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>

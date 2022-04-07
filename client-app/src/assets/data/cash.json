@@ -1,0 +1,31 @@
+[
+
+  {
+    "id":1,
+    "label":"صندوق 1",
+    "type":"check",
+    "accNumber": 123456789,
+    "cardNumber": 1234123412341234
+  },
+  {
+    "id":2,
+    "label":"صندوق 2",
+    "type":"bank",
+    "accNumber": 123456789,
+    "cardNumber": 1234123412341234
+  },
+  {
+    "id":3,
+    "label":"صندوق 3",
+    "type":"cash",
+    "accNumber": 123456789,
+    "cardNumber": 1234123412341234
+  },
+  {
+    "id":4,
+    "label":"صندوق 4",
+    "type":"cash",
+    "accNumber": 123456789,
+    "cardNumber": 1234123412341234
+  }
+]

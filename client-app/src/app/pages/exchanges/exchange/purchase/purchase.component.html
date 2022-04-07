@@ -1,0 +1,316 @@
+
+    <div class="p-field p-col-12">
+      <form [formGroup]="purchaseForm" class="exchange-component p-fluid p-formgrid p-grid" (submit)="onSaveTransaction()">
+        <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+          <label for="txt-vazn">مظنه خرید</label>
+          <p-inputNumber inputId="txt-vazn" mode="decimal"
+                         formControlName="MESGHAL_PRICE"
+                         dir="ltr" class="p-text-left"
+                         [(ngModel)]="mesghalPrice"
+                         (onInput)="onChangeMesghalPrice($event)"
+                         [ngClass]="[this.purchaseForm.controls.MESGHAL_PRICE.invalid && (this.purchaseForm.controls.MESGHAL_PRICE.dirty || this.purchaseForm.controls.MESGHAL_PRICE.touched)  ?'ng-invalid ng-dirty':'']"
+
+          ></p-inputNumber>
+          <div
+            *ngIf="this.purchaseForm.controls.MESGHAL_PRICE.invalid && (this.purchaseForm.controls.MESGHAL_PRICE.dirty || this.purchaseForm.controls.MESGHAL_PRICE.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.MESGHAL_PRICE.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i> مزنه مثقال اجباری است.
+            </div>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+          <label for="txt-gheymat-har-geram">قیمت هر گرم</label>
+          <p-inputNumber  inputId="txt-gheymat-har-geram"
+                          mode="decimal"
+                          formControlName="GRAM_PRICE"
+                          dir="ltr"
+                          class="p-text-left"
+                          [(ngModel)]="gramPrice"
+                          (onInput)="onChangeGramPrice($event)"
+                          [ngClass]="[this.purchaseForm.controls.GRAM_PRICE.invalid && (this.purchaseForm.controls.GRAM_PRICE.dirty || this.purchaseForm.controls.GRAM_PRICE.touched)  ?'ng-invalid ng-dirty':'']"
+
+          ></p-inputNumber>
+          <div
+            *ngIf="this.purchaseForm.controls.GRAM_PRICE.invalid && (this.purchaseForm.controls.GRAM_PRICE.dirty || this.purchaseForm.controls.GRAM_PRICE.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.GRAM_PRICE.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i> قیمت هر گرم اجباری است.
+            </div>
+          </div>
+        </div>
+        <p-divider class="p-col-12" type="dashed" align="left">
+        </p-divider>
+        <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+          <label for="drp-gold-type">نوع طلا</label>
+          <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonGoldType" [@fadeInOnEnter]></p-skeleton>
+          <p-dropdown *ngIf="!skeletonGoldType"
+                      inputId="drp-gold-type" placeholder="انتخاب نوع طلا"
+                      [filter]="true"
+                      [options]="goldType"
+                      [(ngModel)]="selectedGoldType"
+                      (onChange)="onchange($event)"
+                      formControlName="DOM_ID_GOLD_TYPE"
+                      [ngClass]="[this.purchaseForm.controls.DOM_ID_GOLD_TYPE.invalid && (this.purchaseForm.controls.DOM_ID_GOLD_TYPE.dirty || this.purchaseForm.controls.DOM_ID_GOLD_TYPE.touched)  ?'ng-invalid ng-dirty':'']"
+
+          ></p-dropdown>
+          <div
+            *ngIf="this.purchaseForm.controls.DOM_ID_GOLD_TYPE.invalid && (this.purchaseForm.controls.DOM_ID_GOLD_TYPE.dirty || this.purchaseForm.controls.DOM_ID_GOLD_TYPE.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.DOM_ID_GOLD_TYPE.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i>نوع طلا اجباری است.
+            </div>
+          </div>
+        </div>
+
+
+        <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter] *ngIf="selectedGoldType!=enGoldType.accountGold.valueOf()">
+          <label for="drp-noe-sefaresh">نوع کالا</label>
+          <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonGoods" [@fadeInOnEnter]></p-skeleton>
+          <p-dropdown *ngIf="!skeletonGoods"
+                      inputId="drp-good-Id" placeholder="انتخاب نوع کالا"
+                      [filter]="true"
+                      [options]="goods"
+                      formControlName="GOOD_ID"
+                      [ngClass]="[this.purchaseForm.controls.GOOD_ID.invalid && (this.purchaseForm.controls.GOOD_ID.dirty || this.purchaseForm.controls.GOOD_ID.touched)  ?'ng-invalid ng-dirty':'']"
+
+          ></p-dropdown>
+          <div
+            *ngIf="this.purchaseForm.controls.GOOD_ID.invalid && (this.purchaseForm.controls.GOOD_ID.dirty || this.purchaseForm.controls.GOOD_ID.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.GOOD_ID.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i>نوع کالا اجباری است.
+            </div>
+          </div>
+        </div>
+
+
+        <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter] *ngIf="selectedGoldType==enGoldType.accountGold.valueOf()">
+          <label for="drp-noe-hesab">نوع حساب طلا</label>
+          <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonGoldAccountType" [@fadeInOnEnter]></p-skeleton>
+          <p-dropdown *ngIf="!skeletonGoldAccountType"
+                      inputId="drp-noe-hesab" placeholder="انتخاب نوع حساب طلا"
+                      [options]="domGoldAccountType"
+                      formControlName="DOM_ID_GOLD_ACCOUNT_TYPE"
+                      [ngClass]="[this.purchaseForm.controls.DOM_ID_GOLD_ACCOUNT_TYPE.invalid && (this.purchaseForm.controls.DOM_ID_GOLD_ACCOUNT_TYPE.dirty || this.purchaseForm.controls.DOM_ID_GOLD_ACCOUNT_TYPE.touched)  ?'ng-invalid ng-dirty':'']"
+
+          ></p-dropdown>
+          <div
+            *ngIf="this.purchaseForm.controls.DOM_ID_GOLD_ACCOUNT_TYPE.invalid && (this.purchaseForm.controls.DOM_ID_GOLD_ACCOUNT_TYPE.dirty || this.purchaseForm.controls.DOM_ID_GOLD_ACCOUNT_TYPE.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.DOM_ID_GOLD_ACCOUNT_TYPE.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i>نوع حساب طلا اجباری است.
+            </div>
+          </div>
+        </div>
+
+        <div class="p-field p-col-10 p-md-5" [@fadeInOnEnter]>
+          <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonCustomers" [@fadeInOnEnter]></p-skeleton>
+          <label for="txt-vazn-tala">مشتری</label>
+          <p-autoComplete field="label"
+                          *ngIf="!skeletonCustomers" [@fadeInOnEnter]
+                          [suggestions]="filterCustomer"
+                          (completeMethod)="search($event)"
+                          [minLength]=1
+                          [(ngModel)]="customerID"
+                          formControlName="CUSTOMER_ID"
+                          [ngClass]="[this.purchaseForm.controls.CUSTOMER_ID.invalid && (this.purchaseForm.controls.CUSTOMER_ID.dirty || this.purchaseForm.controls.CUSTOMER_ID.touched)  ?'ng-invalid ng-dirty':'']"
+          >
+            <ng-template let-customer pTemplate="item">
+              <div class="country-item">
+                <div>{{customer.label}}</div>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+          <div
+            *ngIf="this.purchaseForm.controls.CUSTOMER_ID.invalid && (this.purchaseForm.controls.CUSTOMER_ID.dirty || this.purchaseForm.controls.CUSTOMER_ID.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.CUSTOMER_ID.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i>مشتری اجباری است.
+            </div>
+          </div>
+        </div>
+
+        <div class="p-field p-col-2 p-md-1" >
+          <label >&nbsp;</label>
+          <div>
+            <button pButton pRipple type="button" (click)="displayCm=!displayCm" class="p-button-outlined p-button-success"
+                    icon="bi bi-plus-circle" iconPos="left"></button>
+          </div>
+        </div>
+
+
+
+        <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+          <label for="txt-vazn">وزن (گرم)</label>
+          <p-inputNumber inputId="txt-vazn" mode="decimal"
+                         formControlName="GRAM_WEIGHT"
+                         dir="ltr" class="p-text-left"
+                         [maxFractionDigits]="4"
+                         [minFractionDigits]="1"
+                         [useGrouping]="false"
+                         [(ngModel)]="gramWeight"
+                         (onInput)="getTotalAmount()"
+                         (onBlur)="getTotalAmount()"
+                         (onFocus)="getTotalAmount()"
+          ></p-inputNumber>
+        </div>
+
+
+        <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+          <label for="txt-tedad">تعداد</label>
+          <p-inputNumber inputId="txt-tedad" mode="decimal"
+                         formControlName="COUNT"
+                         [(ngModel)]="count"
+                         dir="ltr" class="p-text-left"
+                         (onInput)="getTotalAmount()"
+                         (onBlur)="getTotalAmount()"
+                         (onFocus)="getTotalAmount()"
+                         [ngClass]="[this.purchaseForm.controls.COUNT.invalid && (this.purchaseForm.controls.COUNT.dirty || this.purchaseForm.controls.COUNT.touched)  ?'ng-invalid ng-dirty':'']"
+          ></p-inputNumber>
+          <div
+            *ngIf="this.purchaseForm.controls.COUNT.invalid && (this.purchaseForm.controls.COUNT.dirty || this.purchaseForm.controls.COUNT.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.COUNT.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i> تعداد اجباری است.
+            </div>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+          <label for="drp-ayar">عیار</label>
+          <p-inputNumber inputId="txt-ayar" mode="decimal" [min]="500" [max]="1000"
+                         dir="ltr" class="p-text-left"
+                         formControlName="ROVER"
+                         [(ngModel)]="rover"
+                         (onInput)="getTotalAmount()"
+                         (onBlur)="getTotalAmount()"
+                         (onFocus)="getTotalAmount()"
+                         [ngClass]="[this.purchaseForm.controls.ROVER.invalid && (this.purchaseForm.controls.ROVER.dirty || this.purchaseForm.controls.ROVER.touched)  ?'ng-invalid ng-dirty':'']"
+
+          ></p-inputNumber>
+          <div
+            *ngIf="this.purchaseForm.controls.ROVER.invalid && (this.purchaseForm.controls.ROVER.dirty || this.purchaseForm.controls.ROVER.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.ROVER.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i> عیار اجباری است.
+            </div>
+          </div>
+        </div>
+
+
+        <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter] >
+          <label for="txt-kasr-tala">کسر طلا</label>
+          <p-inputNumber inputId="txt-kasr-tala" mode="decimal"
+                         dir="ltr" class="p-text-left"
+                         formControlName="GOLD_BOXER"
+                         [maxFractionDigits]="4"
+                         [minFractionDigits]="1"
+                         [(ngModel)]="goldBoxer"
+                         (onInput)="getTotalAmount()"
+                         (onBlur)="getTotalAmount()"
+                         (onFocus)="getTotalAmount()"></p-inputNumber>
+        </div>
+
+        <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+          <label for="drp-anbar">انبار</label>
+          <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonStorage" [@fadeInOnEnter]></p-skeleton>
+          <p-dropdown *ngIf="!skeletonStorage"
+                      inputId="drp-anbar" placeholder="انتخاب انبار"
+                      [options]="storage"
+                      formControlName="STORAGE_ID"
+                      [ngClass]="[this.purchaseForm.controls.STORAGE_ID.invalid && (this.purchaseForm.controls.STORAGE_ID.dirty || this.purchaseForm.controls.STORAGE_ID.touched)  ?'ng-invalid ng-dirty':'']"
+
+          ></p-dropdown>
+          <div
+            *ngIf="this.purchaseForm.controls.STORAGE_ID.invalid && (this.purchaseForm.controls.STORAGE_ID.dirty || this.purchaseForm.controls.STORAGE_ID.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.STORAGE_ID.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i> انبار اجباری است.
+            </div>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+          <label for="txt-gheymat-kol">قیمت کل</label>
+          <p-inputNumber inputId="txt-gheymat-kol" mode="decimal" dir="ltr" class="p-text-left"
+                         formControlName="TOTAL_AMOUNT"
+                         [ngClass]="[this.purchaseForm.controls.TOTAL_AMOUNT.invalid && (this.purchaseForm.controls.TOTAL_AMOUNT.dirty || this.purchaseForm.controls.TOTAL_AMOUNT.touched)  ?'ng-invalid ng-dirty':'']"
+          ></p-inputNumber>
+          <div
+            *ngIf="this.purchaseForm.controls.TOTAL_AMOUNT.invalid && (this.purchaseForm.controls.TOTAL_AMOUNT.dirty || this.purchaseForm.controls.TOTAL_AMOUNT.touched)"
+            [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+            <div *ngIf="this.purchaseForm.controls.TOTAL_AMOUNT.errors?.required" [@fadeInOnEnter]>
+              <i class="bi bi-exclamation-circle"></i> قیمت کل اجباری است.
+            </div>
+          </div>
+        </div>
+
+        <div class="p-hidden-xs-down p-md-3"></div>
+
+        <div class="p-hidden-xs-down p-md-3"></div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>&nbsp;</label>
+          <button pButton pRipple type="button"
+                  [loading]="loadingBtnPayment"
+                  (click)="showPayment()"
+                  [disabled]="!isSave" label="اطلاعات پرداخت" class="p-button-warning"
+                  icon="bi bi-check2-circle" iconPos="left"></button>
+        </div>
+        <div class="p-hidden-xs-down p-md-3"></div>
+
+        <div class="p-hidden-xs-down p-md-3"></div>
+
+        <div class="p-field p-col-12 p-md-3">
+          <button pButton pRipple type="submit" label="ثبت تبادل"
+                  [loading]="isLoading"
+                  [disabled]="isSave||purchaseForm.invalid"
+                  class="p-button-success" icon="bi bi-save"
+
+                  iconPos="left"></button>
+        </div>
+
+        <div class="p-field p-col-12 p-md-3">
+          <button pButton pRipple type="button" label="منصرف شدم" (click)="resetFrom()" class="p-button-outlined p-button-danger"
+                  icon="bi bi-x-square" iconPos="left"></button>
+        </div>
+      </form>
+    </div>
+
+
+
+    <p-toast position="bottom-left"></p-toast>
+
+
+    <!-- Modal -->
+    <p-dialog header="" [modal]="true" [style]="{width: '90%'}" [(visible)]="display" [resizable]="true" [maximizable]="true">
+      <ng-template pTemplate="header">
+        دریافت / پرداخت
+      </ng-template>
+        <app-payment *ngIf="display"
+                     [transactionId]="this.transactionId"
+                     [customerId]="this.customerId"
+                     [paymentDomTransferType]="enTransferType.payment"
+                     (closeMe)="display=!$event"></app-payment>
+
+    </p-dialog>
+
+    <!-- Modal -->
+    <p-dialog header="" [modal]="true" [style]="{width: '90%'}" [(visible)]="displayCm"  [resizable]="true" [maximizable]="true">
+      <ng-template pTemplate="header">
+        مشتری
+      </ng-template>
+      <app-add-external-customer *ngIf="displayCm" (closeMe)="onCloseCustomer($event)"></app-add-external-customer>
+    </p-dialog>

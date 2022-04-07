@@ -1,0 +1,142 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="menuForm" (ngSubmit)="saveMenu()">
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>عنوان</label>
+    <input type="text"
+           [ngClass]="[this.menuForm.controls.TITLE.invalid && (this.menuForm.controls.TITLE.dirty || this.menuForm.controls.TITLE.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="TITLE"
+           pInputText
+           [(ngModel)]="menu.TITLE"/>
+    <div
+      *ngIf="this.menuForm.controls.TITLE.invalid && (this.menuForm.controls.TITLE.dirty || this.menuForm.controls.TITLE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.menuForm.controls.TITLE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان منو اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>نام</label>
+    <input type="text"
+           [ngClass]="[this.menuForm.controls.NAME.invalid && (this.menuForm.controls.NAME.dirty || this.menuForm.controls.NAME.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="NAME"
+           pInputText
+           style="text-align: left"
+           [(ngModel)]="menu.NAME"/>
+    <div
+      *ngIf="this.menuForm.controls.NAME.invalid && (this.menuForm.controls.NAME.dirty || this.menuForm.controls.NAME.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.menuForm.controls.NAME.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> نام منو اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>مسیر</label>
+    <input type="text"
+           [ngClass]="[this.menuForm.controls.ROUTE.invalid && (this.menuForm.controls.ROUTE.dirty || this.menuForm.controls.ROUTE.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="ROUTE"
+           pInputText
+           style="text-align: left"
+           [(ngModel)]="menu.ROUTE"/>
+    <div
+      *ngIf="this.menuForm.controls.ROUTE.invalid && (this.menuForm.controls.ROUTE.dirty || this.menuForm.controls.ROUTE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.menuForm.controls.ROUTE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>مسیر اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>آیکن</label>
+    <p-dropdown
+      appendTo="body"
+      [filter]="true"
+      placeholder="انتخاب آیکن"
+      [(ngModel)]="menu.ICON"
+      formControlName="ICON"
+      [ngClass]="[this.menuForm.controls.ICON.invalid && (this.menuForm.controls.ICON.dirty || this.menuForm.controls.ICON.touched)  ?'ng-invalid ng-dirty':'']"
+      [options]="icons"
+    >
+      <ng-template let-item pTemplate="selectedItem">
+        <i class="{{item.label}}" style="width:16px;vertical-align:middle"></i>
+        <span style="vertical-align:middle; margin-right: .5em">{{item.label}}</span>
+      </ng-template>
+      <ng-template let-ico pTemplate="item">
+        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+          <i class="{{ico.label}}" style="width:24px;position:absolute;top:1px;left:5px"></i>
+          <div style="font-size:14px;float:right;margin-top:4px">{{ico.label}}</div>
+        </div>
+      </ng-template>
+
+    </p-dropdown>
+    <div
+      *ngIf="this.menuForm.controls.ICON.invalid && (this.menuForm.controls.ICON.dirty || this.menuForm.controls.ICON.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.menuForm.controls.ICON.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>آیکن اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>ترتیب</label>
+    <p-inputNumber
+      mode="decimal"
+      [useGrouping]="false"
+      [ngClass]="[this.menuForm.controls.ORDERING.invalid && (this.menuForm.controls.ORDERING.dirty || this.menuForm.controls.ORDERING.touched)  ?'ng-invalid ng-dirty':'']"
+      formControlName="ORDERING"
+      [(ngModel)]="menu.ORDERING"
+    ></p-inputNumber>
+    <div
+      *ngIf="this.menuForm.controls.ORDERING.invalid && (this.menuForm.controls.ORDERING.dirty || this.menuForm.controls.ORDERING.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.menuForm.controls.ORDERING.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> ترتیب اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>نام منوی والد</label>
+    <p-dropdown
+      appendTo="body"
+      [filter]="true"
+      placeholder="انتخاب منوی والد"
+      [(ngModel)]="menu.MENU_ID"
+      formControlName="MENU_ID"
+      [options]="menus"
+    ></p-dropdown>
+  </div>
+
+
+  <div class="p-field p-md-6"></div>
+
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!menuForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>

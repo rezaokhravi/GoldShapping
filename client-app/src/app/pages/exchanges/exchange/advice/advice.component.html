@@ -1,0 +1,241 @@
+<div class="p-field p-col-12">
+  <form [formGroup]="adviceForm" class="exchange-component p-fluid p-formgrid p-grid" (submit)="onSaveTransaction()">
+
+    <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+      <label for="drp-noe-sefaresh">نوع سفارش</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonDomOrderType"
+                  [@fadeInOnEnter]></p-skeleton>
+
+      <p-dropdown inputId="drp-noe-sefaresh" placeholder="انتخاب نوع سفارش"
+                  [filter]="true"
+                  [options]="domOrderType"
+                  [(ngModel)]="selectedOrderType"
+                  *ngIf="!skeletonDomOrderType"
+                  (onChange)="onchangeOrderType($event)"
+                  formControlName="DOM_ID_ORDER_TYPE" [@fadeInOnEnter]></p-dropdown>
+    </div>
+
+    <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+      <label for="txt-size">کد</label>
+      <p-inputNumber dir="ltr" class="p-text-left" inputId="txt-size" mode="decimal"
+                     [disabled]="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive"
+                     formControlName="ORDER_CODE"
+                     [useGrouping]="false"
+      ></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter] >
+      <label for="drp-noe-sefaresh">نوع کالا</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonGoods" [@fadeInOnEnter]></p-skeleton>
+      <p-dropdown inputId="drp-good-Id" placeholder="انتخاب نوع کالا"
+                  *ngIf="!skeletonGoods"
+                  [@fadeInOnEnter]
+                  [filter]="true"
+                  [options]="goods"
+                  [disabled]="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive"
+                  formControlName="GOOD_ID"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+      <label>تاریخ سفارش</label>
+      <ngx-jdatepicker
+        mode="day"
+        dir="rtl"
+        theme="dp-material"
+        formControlName="ORDER_DATE"
+        [config]="datePickerConfig"
+        class="p-disabled"
+        (onChange)="selectedOrderDate($event)"
+      ></ngx-jdatepicker>
+    </div>
+
+
+    <div class="p-field p-col-12 p-md-5" [@fadeInOnEnter]>
+      <label for="txt-vazn-tala">مشتری</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonCustomers" [@fadeInOnEnter]></p-skeleton>
+      <p-autoComplete field="label"
+                      *ngIf="!skeletonCustomers"
+                      [@fadeInOnEnter]
+                      [suggestions]="filterCustomer"
+                      (completeMethod)="search($event)"
+                      [minLength]=1
+                      [(ngModel)]="customerID"
+                      formControlName="CUSTOMER_ID"
+                      [disabled]="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive">
+        <ng-template let-customer pTemplate="item">
+          <div class="country-item">
+            <div>{{customer.label}}</div>
+          </div>
+        </ng-template>
+      </p-autoComplete>
+    </div>
+
+    <div class="p-field p-col-2 p-md-1" >
+      <label >&nbsp;</label>
+      <div>
+        <button pButton pRipple type="button" (click)="displayCm=!displayCm" class="p-button-outlined p-button-success"
+                icon="bi bi-plus-circle" iconPos="left"></button>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label for="drp-model-sefaresh">مدل سفارش</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonDomOrderModel"
+                  [@fadeInOnEnter]></p-skeleton>
+      <p-dropdown inputId="drp-model-sefaresh" placeholder="انتخاب مدل سفارش"
+                  *ngIf="!skeletonDomOrderModel"
+                  [@fadeInOnEnter]
+                  [filter]="true"
+                  [options]="domOrderModel"
+                  [disabled]="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive"
+                  formControlName="ORDER_MODEL"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label for="txt-size">سایز</label>
+      <p-inputNumber dir="ltr" class="p-text-left" inputId="txt-size" mode="decimal"
+                     [disabled]="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive"
+                     formControlName="ORDER_SIZE"
+                     [maxFractionDigits]="4"
+                     [minFractionDigits]="1"
+      ></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label for="txt-noe-negin">نوع نگین</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonDomGemType"
+                  [@fadeInOnEnter]></p-skeleton>
+      <p-dropdown inputId="drp-noe-negin" placeholder="انتخاب نوع نگین"
+                  *ngIf="!skeletonDomGemType"
+                  [@fadeInOnEnter]
+                  [filter]="true"
+                  [options]="domGemType"
+                  [disabled]="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive"
+                  formControlName="DOM_ID_ORDER_GEM_TYPE"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]>
+      <label for="txt-vazn-negin">وزن نگین</label>
+      <p-inputNumber dir="ltr" class="p-text-left" inputId="txt-vazn-negin" mode="decimal"
+                     [disabled]="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive"
+                     formControlName="ORDER_GEM_WEIGHT"
+                     [maxFractionDigits]="4"
+                     [minFractionDigits]="1"
+      ></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12 p-md-4" [@fadeInOnEnter] *ngIf="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive">
+      <label for="txt-vazn-tala">سفارشات</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonOrders" [@fadeInOnEnter]></p-skeleton>
+      <p-autoComplete field="Full_TITLE"
+                      *ngIf="!skeletonOrders"
+                      [@fadeInOnEnter]
+                      [suggestions]="filterOrder"
+                      (completeMethod)="searchOrder($event)"
+                      [minLength]=1
+                      (onSelect)="getOrderTransaction($event)"
+                      [(ngModel)]="selectedOrder"
+                      [ngModelOptions]="{standalone: true}"
+                      [disabled]="adviceForm.controls['DOM_ID_ORDER_TYPE'].value != enOrderType.receive">
+        <ng-template let-order pTemplate="item">
+          <div class="country-item">
+            <div>{{order.Full_TITLE}}</div>
+          </div>
+        </ng-template>
+      </p-autoComplete>
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]
+         *ngIf="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive">
+      <label for="txt-vazn-sakhthe-shodeh">وزن کار ساخته شده (دریافتی کارگاه)</label>
+      <p-inputNumber dir="ltr" class="p-text-left" inputId="txt-vazn-sakhthe-shodeh" mode="decimal"
+                     formControlName="WORK_WEIGHT"
+                     [maxFractionDigits]="4"
+                     [minFractionDigits]="1"
+      ></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12 p-md-2" [@fadeInOnEnter]
+         *ngIf="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive">
+      <label for="txt-tsviyeh-date">تاریخ تسویه</label>
+      <ngx-jdatepicker
+        mode="day"
+        dir="rtl"
+        theme="dp-material"
+        formControlName="SETTLEMENT_DATE"
+        [config]="datePickerConfig"
+        (onChange)="selectedSettlementDate($event)"
+      ></ngx-jdatepicker>
+    </div>
+
+    <div class="p-field p-col-12 p-md-4" [@fadeInOnEnter]
+         *ngIf="adviceForm.controls['DOM_ID_ORDER_TYPE'].value == enOrderType.receive">
+      <label for="txt-jame-hesab">مبلغ کل</label>
+      <p-inputNumber dir="ltr" class="p-text-left" inputId="txt-jame-hesab" mode="decimal"
+                     formControlName="TOTAL_AMOUNT"
+      ></p-inputNumber>
+    </div>
+
+
+    <div class="p-hidden-xs-down p-md-3"></div>
+
+    <div class="p-hidden-xs-down p-md-3"></div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <label>&nbsp;</label>
+      <button pButton pRipple type="button"
+              [loading]="loadingBtnPayment"
+              (click)="showPayment()"
+              [disabled]="!isSave"
+              [disabled]="!isSave" label="اطلاعات پرداخت" class="p-button-warning"
+              icon="bi bi-check2-circle" iconPos="left"></button>
+    </div>
+
+
+    <div class="p-hidden-xs-down p-md-3"></div>
+
+    <div class="p-hidden-xs-down p-md-3"></div>
+    <div class="p-field p-col-12 p-md-3">
+      <button pButton pRipple type="submit" label="ثبت تبادل"
+              [disabled]="isSave"
+              [loading]="isLoading"
+              class="p-button-success"
+              icon="bi bi-save"
+              iconPos="left"></button>
+    </div>
+
+    <div class="p-field p-col-12 p-md-3">
+      <button pButton pRipple type="button" (click)="resetFrom()"
+              label="منصرف شدم" class="p-button-outlined p-button-danger"
+              icon="bi bi-x-square" iconPos="left"></button>
+    </div>
+  </form>
+</div>
+
+<p-toast position="bottom-left"></p-toast>
+
+
+<!-- Modal -->
+<p-dialog header="" [modal]="true" [style]="{width: '90%'}" [(visible)]="display" [resizable]="true"
+          [maximizable]="true">
+  <ng-template pTemplate="header">
+    دریافت / پرداخت
+  </ng-template>
+  <app-payment *ngIf="display"
+               [transactionId]="transactionId"
+               [customerId]="customerId"
+               (closeMe)="display=!$event"
+  ></app-payment>
+</p-dialog>
+
+
+<!-- Modal -->
+<p-dialog header="" [modal]="true" [style]="{width: '90%'}" [(visible)]="displayCm"  [resizable]="true" [maximizable]="true">
+  <ng-template pTemplate="header">
+    مشتری
+  </ng-template>
+  <app-add-external-customer *ngIf="displayCm" (closeMe)="onCloseCustomer($event)"></app-add-external-customer>
+</p-dialog>

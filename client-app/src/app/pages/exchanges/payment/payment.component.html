@@ -1,0 +1,224 @@
+<form [formGroup]="paymentForm" class="exchange-component p-fluid p-formgrid p-grid" (submit)="onSavePayment()">
+
+    <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+      <label>نوع واریزی</label>
+      <div class="p-field p-col-12  p-grid" [@fadeInOnEnter]>
+        <div  class="p-field p-col-12 p-md-6" >
+          <p-radioButton name="DOM_ID_TRANSFER_TYPE"
+                         (onClick)="changeAccountResidual(price)"
+                         [value]="enTransferType.receive"
+                         [(ngModel)]="paymentDomTransferType"
+                         label="دریافت"
+                         formControlName="DOM_ID_TRANSFER_TYPE"
+          ></p-radioButton>
+        </div>
+        <div  class="p-field p-col-12 p-md-6">
+          <p-radioButton name="DOM_ID_TRANSFER_TYPE"
+                         (onClick)="changeAccountResidual(price)"
+                         [value]="enTransferType.payment"
+                         [(ngModel)]="paymentDomTransferType"
+                         label="پرداخت"
+                         formControlName="DOM_ID_TRANSFER_TYPE"
+          ></p-radioButton>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="p-field p-col-12 p-md-6">
+      <label for="txt-m-mablagh">مبلغ</label>
+      <p-inputNumber inputId="txt-m-mablagh"
+                     mode="decimal"
+                     formControlName="PRICE"
+                     (onInput)="changeAccountResidual($event.value)"
+                     [ngModel]="price"
+                     dir="ltr"
+                     class="p-text-left"
+      ></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <label for="drp-babat">بابت</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonBehalfType" [@fadeInOnEnter]></p-skeleton>
+      <p-dropdown *ngIf="!skeletonBehalfType" [@fadeInOnEnter]
+                  appendTo="body" inputId="drp-babat"
+                  appendTo="body"
+                  placeholder="انتخاب ..."
+                  [ngClass]="[this.paymentForm.controls.DOM_ID_BEHALF_TYPE.invalid && (this.paymentForm.controls.DOM_ID_BEHALF_TYPE.dirty || this.paymentForm.controls.DOM_ID_BEHALF_TYPE.touched)  ?'ng-invalid ng-dirty':'']"
+                  [options]="behalfType"
+                  formControlName="DOM_ID_BEHALF_TYPE"
+      ></p-dropdown>
+      <div
+        *ngIf="this.paymentForm.controls.DOM_ID_BEHALF_TYPE.invalid && (this.paymentForm.controls.DOM_ID_BEHALF_TYPE.dirty || this.paymentForm.controls.DOM_ID_BEHALF_TYPE.touched)"
+        [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+        <div *ngIf="this.paymentForm.controls.DOM_ID_BEHALF_TYPE.errors?.required" [@fadeInOnEnter]>
+          <i class="bi bi-exclamation-circle"></i> بابت اجباری است.
+        </div>
+
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <label for="drp-noe-pardakht">نوع پرداخت</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonPaymentType" [@fadeInOnEnter]></p-skeleton>
+      <p-dropdown *ngIf="!skeletonPaymentType" [@fadeInOnEnter]
+                  appendTo="body" inputId="drp-noe-pardakht"
+                  placeholder="انتخاب ..."
+                  [options]="paymentType"
+                  [ngClass]="[this.paymentForm.controls.DOM_ID_PAYMENT_TYPE.invalid && (this.paymentForm.controls.DOM_ID_PAYMENT_TYPE.dirty || this.paymentForm.controls.DOM_ID_PAYMENT_TYPE.touched)  ?'ng-invalid ng-dirty':'']"
+                  formControlName= "DOM_ID_PAYMENT_TYPE"
+      ></p-dropdown>
+      <div
+        *ngIf="this.paymentForm.controls.DOM_ID_PAYMENT_TYPE.invalid && (this.paymentForm.controls.DOM_ID_PAYMENT_TYPE.dirty || this.paymentForm.controls.DOM_ID_PAYMENT_TYPE.touched)"
+        [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+        <div *ngIf="this.paymentForm.controls.DOM_ID_PAYMENT_TYPE.errors?.required" [@fadeInOnEnter]>
+          <i class="bi bi-exclamation-circle"></i> نوع پرداخت اجباری است.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="p-field p-col-12 p-md-6">
+      <label for="drp-cash-type">صندوق</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonCashes" [@fadeInOnEnter]></p-skeleton>
+      <p-dropdown
+        *ngIf="!skeletonCashes" [@fadeInOnEnter]
+        inputId="drp-cash-type"
+        appendTo="body"
+        placeholder="انتخاب نوع صندوق"
+        formControlName="CASH_ID"
+        [options]="cashes"
+        [ngClass]="[this.paymentForm.controls.CASH_ID.invalid && (this.paymentForm.controls.CASH_ID.dirty || this.paymentForm.controls.CASH_ID.touched)  ?'ng-invalid ng-dirty':'']"
+      ></p-dropdown>
+      <div
+        *ngIf="this.paymentForm.controls.CASH_ID.invalid && (this.paymentForm.controls.CASH_ID.dirty || this.paymentForm.controls.CASH_ID.touched)"
+        [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+        <div *ngIf="this.paymentForm.controls.CASH_ID.errors?.required" [@fadeInOnEnter]>
+          <i class="bi bi-exclamation-circle"></i> صندوق اجباری است.
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <label for="txt-mandeh-hesab">مانده حساب</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonAccountResidual" [@fadeInOnEnter]></p-skeleton>
+      <p-inputNumber  *ngIf="!skeletonAccountResidual" [@fadeInOnEnter]
+                    inputId="txt-mandeh-hesab"
+                      [ngModel]="this.accountResidualChanges"
+                     mode="decimal"
+                      dir="ltr"
+                      class="p-disabled p-text-left"
+                     formControlName= "ACCOUNT_RESIDUAL"></p-inputNumber>
+    </div>
+
+    <div class="p-field p-col-12">
+      <label for="txt-description">توضیحات</label>
+      <input type="text"
+             id="txt-description"
+             formControlName="DESCRIPTION"
+             pInputText/>
+    </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple [disabled]="!paymentForm.valid"
+            [loading]="isLoading" type="submit"  label=" ثبت " class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button"
+            [loading]="isLoading"
+            (click)="print()"
+            label="چاپ" class="p-button-outlined p-button-info p-col-2"
+            icon="bi bi-printer" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-md-3"></div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="closeFrom()"
+            label=" منصرف شدم "
+            class="p-button-danger p-button-outlined" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+
+    <div class="p-field p-col-12">
+      <p-table #dt
+               [value]="payments"
+               [rows]="10"
+               [paginator]="true"
+               [globalFilterFields]="[
+               'PRICE',
+               'GOOD_TITLE',
+               'DOM_ID_TRANSFER_TYPE_TITLE',
+               'DOM_ID_PAYMENT_TYPE_TITLE',
+               'DOM_ID_BEHALF_TYPE_TITLE',
+               'CASH_ID_TITLE'
+               ]"
+               [(selection)]="selected"
+               [rowHover]="true"
+               [scrollable]="true"
+               [rowsPerPageOptions]="[10,25,50]"
+               [loading]="loading"
+               dataKey="id"
+               scrollDirection="both"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between p-grid">
+            <h5 class="p-col-12 p-md-2">لیست تراکنش ها</h5>
+            <div class="p-col-12 p-md-10 ">
+          <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="search($event,dt)" placeholder="جستجو..." />
+          </span>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th  style="width:200px" pSortableColumn="GOOD_TITLE">نام کالا<p-sortIcon field="GOOD_TITLE"></p-sortIcon></th>
+            <th  style="width:200px" pSortableColumn="DOM_ID_TRANSFER_TYPE_TITLE">نوع واریزی <p-sortIcon field="DOM_ID_TRANSFER_TYPE_TITLE"></p-sortIcon></th>
+            <th  style="width:200px" pSortableColumn="DOM_ID_PAYMENT_TYPE_TITLE">نوع پرداخت <p-sortIcon field="DOM_ID_PAYMENT_TYPE_TITLE"></p-sortIcon></th>
+            <th  style="width:200px" pSortableColumn="DOM_ID_BEHALF_TYPE_TITLE">بابت<p-sortIcon field="DOM_ID_BEHALF_TYPE_TITLE"></p-sortIcon></th>
+            <th  style="width:200px" pSortableColumn="CASH_ID_TITLE">صندوق<p-sortIcon field="CASH_ID_TITLE"></p-sortIcon></th>
+            <th  style="width:200px" pSortableColumn="PRICE">مبلغ<p-sortIcon field="PRICE"></p-sortIcon></th>
+            <th  style="width:200px" pSortableColumn="ACCOUNT_RESIDUAL">مانده حساب<p-sortIcon field="ACCOUNT_RESIDUAL"></p-sortIcon></th>
+            <th  style="width:200px" pSortableColumn="IS_SETTLE">وضعیت<p-sortIcon field="IS_SETTLE"></p-sortIcon></th>
+            <th  style="width:200px" pSortableColumn="DESCRIPTION">توضیحات<p-sortIcon field="DESCRIPTION"></p-sortIcon></th>
+            <th  style="width:200px"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-payment>
+          <tr>
+
+            <td  style="width:200px">{{payment.GOOD_TITLE}}</td>
+            <td  style="width:200px">{{payment.DOM_ID_TRANSFER_TYPE_TITLE}}</td>
+            <td  style="width:200px">{{payment.DOM_ID_PAYMENT_TYPE_TITLE}}</td>
+            <td  style="width:200px">{{payment.DOM_ID_BEHALF_TYPE_TITLE}}</td>
+            <td  style="width:200px">{{payment.CASH_ID_TITLE}}</td>
+            <td  style="width:200px">{{payment.PRICE| mask: 'separator':','}}</td>
+            <td  style="width:200px">{{payment.ACCOUNT_RESIDUAL| mask: 'separator':','}}</td>
+            <td  style="width:200px">{{payment.IS_SETTLE ==1 ? 'تسویه' :'بدهکار'}}</td>
+            <td  style="width:200px">{{payment.DESCRIPTION}}</td>
+
+            <td  style="width:200px">
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning p-button-sm p-mr-lg-2 p-mr-md-2 p-mt-2" (click)="delete(payment)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="flex: 1 1 auto; justify-content: flex-start">اطلاعاتی جهت نمایش وجود ندارد</td>
+          </tr>
+        </ng-template>
+      </p-table>
+  </div>
+  </form>
+
+<p-toast position="bottom-left"></p-toast>
+

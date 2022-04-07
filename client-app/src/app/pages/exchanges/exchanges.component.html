@@ -1,0 +1,28 @@
+<div class="tab-exchange">
+  <div class="exchange-component p-fluid p-formgrid p-grid">
+    <div class="p-field p-col-12">
+      <label for="drp-taraf-hesab">طرف حساب</label>
+      <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonAccountTypes" [@fadeInOnEnter]></p-skeleton>
+      <p-dropdown inputId="drp-taraf-hesab" *ngIf="!skeletonAccountTypes" [(ngModel)]="selectedAccountType" [options]="accountTypes" [@fadeInOnEnter]></p-dropdown>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="selectedAccountType==enAccountType.exchange" [@fadeInOnEnter] >
+  <app-exchange [domIdAccountType] =selectedAccountType ></app-exchange>
+</div>
+
+<div *ngIf="selectedAccountType==enAccountType.wholesaler" [@fadeInOnEnter] >
+  <app-wholesaler [domIdAccountType] =selectedAccountType ></app-wholesaler>
+</div>
+
+<div *ngIf="selectedAccountType==enAccountType.workshop" [@fadeInOnEnter] >
+  <app-workshop [domIdAccountType] =selectedAccountType ></app-workshop>
+</div>
+
+
+
+
+
+

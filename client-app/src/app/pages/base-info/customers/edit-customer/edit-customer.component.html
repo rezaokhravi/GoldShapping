@@ -1,0 +1,120 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="customerForm" (ngSubmit)="saveCustomer()">
+
+  <div class="p-field p-col-12 p-md-6">
+    <label >کد مشتری</label>
+    <input type="text"
+           formControlName="CODE"
+           pInputText
+           [(ngModel)]="customer.CODE"/>
+
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="domIdType-gender">جنسیت</label>
+    <p-dropdown inputId="drp-domIdType-gender" placeholder="انتخاب کنید..."
+                appendTo="body"
+                [options]="domIdGenderType"
+                [(ngModel)]="customer.DOM_ID_GENDER"
+                formControlName="DOM_ID_GENDER"
+    ></p-dropdown>
+
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="name-customer">نام</label>
+    <input type="text"
+           id="name-customer"
+           [ngClass]="[this.customerForm.controls.NAME.invalid && (this.customerForm.controls.NAME.dirty || this.customerForm.controls.NAME.touched)  ?'ng-invalid ng-dirty':'']"
+           formControlName="NAME"
+           pInputText
+           [(ngModel)]="customer.NAME"/>
+    <div
+      *ngIf="this.customerForm.controls.NAME.invalid && (this.customerForm.controls.NAME.dirty || this.customerForm.controls.NAME.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.customerForm.controls.NAME.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>نام اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="family-customer">نام خانوادگی</label>
+    <input type="text"
+           id="family-customer"
+           formControlName="FAMILY"
+           pInputText
+           [(ngModel)]="customer.FAMILY"/>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="txt-user-nationalCode">کد ملی</label>
+    <input type="text"
+           id="txt-user-nationalCode"
+           pInputText
+           formControlName="NATIONAL_CODE"
+           [(ngModel)]="customer.NATIONAL_CODE"/>
+  </div>
+
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="phone-customer">شماره تماس</label>
+    <input type="text"
+           id="phone-customer"
+           formControlName="PHONE"
+           pInputText
+           [(ngModel)]="customer.PHONE"/>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="txt-user-mobile">مبایل</label>
+    <input type="text"
+      id="txt-user-mobile"
+      formControlName="MOBILE"
+      pInputText
+      [ngClass]="[this.customerForm.controls.MOBILE.invalid && (this.customerForm.controls.MOBILE.dirty || this.customerForm.controls.MOBILE.touched)  ?'ng-invalid ng-dirty':'']"
+      [(ngModel)]="customer.MOBILE"/>
+    <div
+      *ngIf="this.customerForm.controls.MOBILE.invalid && (this.customerForm.controls.MOBILE.dirty || this.customerForm.controls.MOBILE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+
+      <div *ngIf="this.customerForm.controls.MOBILE.errors?.required" >
+        <i class="bi bi-exclamation-circle"></i> شماره تماس اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="address-customer">آدرس</label>
+    <input type="text"
+           id="address-customer"
+           formControlName="ADDRESS"
+           pInputText
+           [(ngModel)]="customer.ADDRESS"/>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="jobTitle-customer">شغل</label>
+    <input type="text"
+           id="jobTitle-customer"
+           formControlName="JOB_TITLE"
+           pInputText
+           [(ngModel)]="customer.JOB_TITLE"/>
+  </div>
+
+  <div class="p-field p-md-6"></div>
+
+  <div class="p-field p-md-6"></div>
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!customerForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>

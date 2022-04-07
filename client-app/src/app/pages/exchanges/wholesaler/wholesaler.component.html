@@ -1,0 +1,201 @@
+<form [formGroup]="wholesalerForm" class="exchange-component p-fluid p-formgrid p-grid" (submit)="onSaveTransaction()">
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="drp-noe-tabadol">نوع تبادل</label>
+    <div class="p-field p-col-12  p-grid" [@fadeInOnEnter]>
+      <div  class="p-field p-col-6 p-md-6" >
+        <p-radioButton formControlName="DOM_ID_EXCHANGE_TYPE" name="DOM_ID_EXCHANGE_TYPE"
+                       [value]="enExchangeTypes.purchase" label="خرید"
+                       [(ngModel)]="domExchangeTypes"
+                       (onClick)="setSeetionItems()"
+        ></p-radioButton>
+      </div>
+      <div  class="p-field p-col-6 p-md-6">
+        <p-radioButton formControlName="DOM_ID_EXCHANGE_TYPE" name="DOM_ID_EXCHANGE_TYPE"
+                       [value]="enExchangeTypes.sale" label="فروش"
+                       [(ngModel)]="domExchangeTypes"
+                       (onClick)="setSeetionItems()"
+        ></p-radioButton>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-field p-md-6" [@fadeInOnEnter]></div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label  for="txt-gheymat-mesghal">قیمت مثقال</label>
+    <p-inputNumber inputId="txt-gheymat-mesghal"  mode="decimal"
+                   dir="ltr" class="p-text-left"
+                   formControlName="MESGHAL_PRICE"
+                   [(ngModel)]="mesghalPrice"
+                   (onInput)="onInputMesghalPrice($event)"
+    ></p-inputNumber>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label for="txt-gheymat-har-geram">قیمت هر گرم</label>
+    <p-inputNumber inputId="txt-gheymat-har-geram"  mode="decimal"
+                   dir="ltr" class="p-text-left"
+                   formControlName="GRAM_PRICE"
+                   [(ngModel)]="gramPrice"
+                   (onInput)="onInputGramPrice($event)"
+    ></p-inputNumber>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label for="drp-gold-type">نوع طلا</label>
+    <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonGoldType" [@fadeInOnEnter]></p-skeleton>
+    <p-dropdown *ngIf="!skeletonGoldType" [@fadeInOnEnter]
+                inputId="drp-gold-type" placeholder="انتخاب نوع طلا"
+                [filter]="true"
+                [options]="goldType"
+                [(ngModel)]="selectedGoldType"
+                formControlName="DOM_ID_GOLD_TYPE"
+    ></p-dropdown>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter] *ngIf="selectedGoldType.toString()!=enGoldType.accountGold">
+    <label  for="drp-noe-kala">نوع کالا</label>
+    <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonGoods" [@fadeInOnEnter]></p-skeleton>
+    <p-dropdown *ngIf="!skeletonGoods" [@fadeInOnEnter]
+                inputId="drp-noe-kala"
+                [filter]="true"
+                placeholder="انتخاب نوع کالا"
+                [options]="goods"
+                formControlName="GOOD_ID"></p-dropdown>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter] *ngIf="selectedGoldType.toString()==enGoldType.accountGold">
+    <label for="drp-noe-hesab">نوع حساب طلا</label>
+    <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonGoldAccountType" [@fadeInOnEnter]></p-skeleton>
+    <p-dropdown *ngIf="!skeletonGoldAccountType" [@fadeInOnEnter]
+                inputId="drp-noe-hesab" placeholder="انتخاب نوع حساب طلا"
+                [options]="domGoldAccountType"
+                formControlName="DOM_ID_GOLD_ACCOUNT_TYPE"></p-dropdown>
+  </div>
+
+
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label  for="txt-tedad">تعداد</label>
+    <p-inputNumber inputId="txt-tedad"  mode="decimal"
+                   formControlName="COUNT"
+                   dir="ltr" class="p-text-left"
+                   [(ngModel)]="count"
+                   (onInput)="onInputCount($event)"
+    ></p-inputNumber>
+  </div>
+
+
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label for="txt-vazn-mesghal">وزن مثقال</label>
+    <p-inputNumber inputId="txt-vazn-mesghal"  mode="decimal"
+                   dir="ltr" class="p-text-left"
+                   [maxFractionDigits]="4"
+                   [minFractionDigits]="1"
+                   [(ngModel)]="mesghalWeight"
+                   (onInput)="SetGram($event)"
+                   formControlName="MESGHAL_WEIGHT"></p-inputNumber>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label for="txt-vazn">وزن (گرم)</label>
+    <p-inputNumber inputId="txt-vazn"  mode="decimal"
+                   dir="ltr" class="p-text-left"
+                   [maxFractionDigits]="4"
+                   [minFractionDigits]="1"
+                   [(ngModel)]="gramWeight"
+                   formControlName="GRAM_WEIGHT"
+                   (onInput)="setMesghal($event)"
+    ></p-inputNumber>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label for="txt-vazn-ayar">وزن 18 عیار</label>
+    <p-inputNumber inputId="txt-vazn-ayar"  mode="decimal"
+                   dir="ltr" class="p-text-left"
+                   [maxFractionDigits]="4"
+                   [minFractionDigits]="1"
+                   formControlName="ROVER_WEIGHT_18"></p-inputNumber>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label for="txt-kasr-ab-shodani">گسر آب شدنی</label>
+    <p-inputNumber inputId="txt-kasr-ab-shodani"  mode="decimal"
+                   dir="ltr" class="p-text-left"
+                   [maxFractionDigits]="4"
+                   [minFractionDigits]="1"
+                   [(ngModel)]="waterUnder"
+                   (onInput)="onInputWaterUnder($event)"
+                   formControlName="WATER_UNDER"></p-inputNumber>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label for="drp-ayar">عیار</label>
+    <p-inputNumber inputId="txt-ayar" mode="decimal" [min]="500" [max]="1000"
+                   dir="ltr" class="p-text-left"
+                   formControlName="ROVER"
+                   [(ngModel)]="rover"
+                   (onInput)="onInputRover($event)"
+    ></p-inputNumber>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label for="drp-anbar">انبار</label>
+    <p-skeleton width="100%" height="2rem" borderRadius="3px" *ngIf="skeletonStorage" [@fadeInOnEnter]></p-skeleton>
+    <p-dropdown *ngIf="!skeletonStorage" [@fadeInOnEnter]
+                inputId="drp-anbar" placeholder="انتخاب انبار"
+                [options]="storage"
+                formControlName="STORAGE_ID"></p-dropdown>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label  for="txt-gheymat-kol">قیمت کل</label>
+    <p-inputNumber inputId="txt-gheymat-kol"  mode="decimal"
+                   dir="ltr" class="p-text-left"
+                   formControlName="TOTAL_AMOUNT"></p-inputNumber>
+  </div>
+
+
+
+  <div class="p-hidden-xs-down p-md-6" [@fadeInOnEnter]>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6" [@fadeInOnEnter]>
+    <label>&nbsp;</label>
+    <button pButton pRipple type="button" (click)="display=!display" [disabled]="!isSave" label="اطلاعات پرداخت" class="p-button-warning"
+            icon="bi bi-check2-circle" iconPos="left"></button>
+  </div>
+
+
+  <div class="p-hidden-xs-down p-md-3" [@fadeInOnEnter]></div>
+
+  <div class="p-hidden-xs-down p-md-3" [@fadeInOnEnter]></div>
+
+  <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+    <button pButton pRipple type="submit" label="ثبت تبادل"
+            [loading]="isLoading"
+            [disabled]="isSave || wholesalerForm.invalid" class="p-button-success" icon="bi bi-save"
+            iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3" [@fadeInOnEnter]>
+    <button pButton pRipple type="button" (click)="resetFrom()"
+            label="منصرف شدم" class="p-button-outlined p-button-danger"
+            icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>
+
+
+
+
+
+<!-- Modal -->
+<p-dialog header="" [modal]="true" [style]="{width: '90%'}" [(visible)]="display">
+  <ng-template pTemplate="header">
+    دریافت / پرداخت
+  </ng-template>
+  <app-payment [transactionId]="transactionId" (closeMe)="display=!$event"></app-payment>
+</p-dialog>

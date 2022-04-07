@@ -1,0 +1,43 @@
+<div class="exchange-component p-fluid p-formgrid p-grid">
+
+  <div class="p-field p-col-12">
+    <label for="drp-noe-tabadol">نوع تبادل</label>
+    <div class="p-field p-col-12  p-grid" [@fadeInOnEnter]>
+      <div  class="p-field p-col-6 p-md-3" >
+        <p-radioButton name="domIdOrderHand" [value]="enExchangeTypes.purchase" label="خرید" [(ngModel)]="domIdExchangeType"
+        ></p-radioButton>
+      </div>
+      <div  class="p-field p-col-6 p-md-3">
+        <p-radioButton name="domIdOrderHand"  [value]="enExchangeTypes.sale" label="فروش" [(ngModel)]="domIdExchangeType"
+        ></p-radioButton>
+      </div>
+      <div  class="p-field p-col-6 p-md-3">
+        <p-radioButton name="domIdOrderHand"  [value]="enExchangeTypes.advice" label="سفارش" [(ngModel)]="domIdExchangeType"
+        ></p-radioButton>
+      </div>
+      <div  class="p-field p-col-6 p-md-3">
+        <p-radioButton name="domIdOrderHand"  [value]="enExchangeTypes.change" label="تعویض" [(ngModel)]="domIdExchangeType"
+        ></p-radioButton>
+      </div>
+    </div>
+    <!--
+    <p-dropdown inputId="drp-noe-tabadol" [filter]="true" placeholder="انتخاب نوع تبادل"
+                [(ngModel)]="transaction.domIdOrderHand" [options]="exchangeTypes"></p-dropdown>
+                -->
+  </div>
+
+  <!------   purchase    ------------>
+  <app-exchange-purchase *ngIf="domIdExchangeType==enExchangeTypes.purchase" [domIdExchangeType]="domIdExchangeType" [domIdAccountType]="domIdAccountType"></app-exchange-purchase>
+  <!------     sale      ------------>
+  <app-exchange-sale *ngIf="domIdExchangeType==enExchangeTypes.sale" [domIdExchangeType]="domIdExchangeType" [domIdAccountType]="domIdAccountType"></app-exchange-sale>
+  <!------    advice     ------------>
+  <app-exchange-advice *ngIf="domIdExchangeType==enExchangeTypes.advice" [domIdExchangeType]="domIdExchangeType" [domIdAccountType]="domIdAccountType"></app-exchange-advice>
+  <!------    change     ------------>
+  <app-exchange-change *ngIf="domIdExchangeType==enExchangeTypes.change" [domIdExchangeType]="domIdExchangeType" [domIdAccountType]="domIdAccountType"></app-exchange-change>
+
+</div>
+
+
+
+
+

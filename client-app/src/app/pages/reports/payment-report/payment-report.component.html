@@ -1,0 +1,63 @@
+<div class="p-fluid p-formgrid p-grid" >
+
+    <div class="p-field p-col-12">
+      <p-table #dt
+               [value]="payment"
+               [rows]="10"
+               [paginator]="true"
+               [globalFilterFields]="['PRICE']"
+               [(selection)]="selected"
+               [rowHover]="true"
+               [scrollable]="true"
+               [rowsPerPageOptions]="[10,25,50]"
+               [loading]="loading"
+               dataKey="id"
+               scrollDirection="both"
+               styleClass="p-datatable-striped p-datatable-gridlines " responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between p-grid">
+            <h5 class="p-col-12 p-md-2">لیست تراکنش ها</h5>
+            <div class="p-col-12 p-md-10 ">
+          <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="search($event,dt)" placeholder="جستجو..." />
+          </span>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th  style="width:200px"  class="p-text-center" pSortableColumn="DOM_ID_EXCHANGE_TYPE_TITLE">نوع تبادل <p-sortIcon field="DOM_ID_EXCHANGE_TYPE_TITLE"></p-sortIcon></th>
+            <th  style="width:200px"  class="p-text-center" pSortableColumn="DOM_ID_PAYMENT_TYPE_TITLE">نوع پرداخت <p-sortIcon field="DOM_ID_PAYMENT_TYPE_TITLE"></p-sortIcon></th>
+            <th  style="width:200px"  class="p-text-center" pSortableColumn="DOM_ID_BEHALF_TYPE_TITLE">بابت<p-sortIcon field="DOM_ID_BEHALF_TYPE_TITLE"></p-sortIcon></th>
+            <th  style="width:200px"  class="p-text-center" pSortableColumn="CASH_ID_TITLE">صندوق<p-sortIcon field="CASH_ID_TITLE"></p-sortIcon></th>
+            <th  style="width:200px"  class="p-text-center" pSortableColumn="ACCOUNT_RESIDUAL">مانده حساب<p-sortIcon field="ACCOUNT_RESIDUAL"></p-sortIcon></th>
+            <th  style="width:200px"  class="p-text-center" pSortableColumn="DESCRIPTION">توضیحات<p-sortIcon field="DESCRIPTION"></p-sortIcon></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-payment>
+          <tr>
+
+            <td  style="width:200px" class="p-text-center" >{{payment.DOM_ID_EXCHANGE_TYPE_TITLE}}</td>
+            <td  style="width:200px" class="p-text-center" >{{payment.DOM_ID_PAYMENT_TYPE_TITLE}}</td>
+            <td  style="width:200px" class="p-text-center" >{{payment.DOM_ID_BEHALF_TYPE_TITLE}}</td>
+            <td  style="width:200px" class="p-text-center" >{{payment.CASH_ID_TITLE}}</td>
+            <td  style="width:200px" class="p-text-center" >{{payment.ACCOUNT_RESIDUAL}}</td>
+            <td  style="width:200px" class="p-text-center" >{{payment.DESCRIPTION}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="flex: 1 1 auto; justify-content: flex-start">اطلاعاتی جهت نمایش وجود ندارد</td>
+          </tr>
+        </ng-template>
+      </p-table>
+  </div>
+
+
+
+  </div>
+
+

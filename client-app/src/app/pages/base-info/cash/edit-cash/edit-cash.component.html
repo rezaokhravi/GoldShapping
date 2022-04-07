@@ -1,0 +1,91 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="cashForm" (ngSubmit)="saveCash()">
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="title-cash">عنوان</label>
+    <input type="text"
+           id="title-cash"
+           [ngClass]="[this.cashForm.controls.TITLE.invalid && (this.cashForm.controls.TITLE.dirty || this.cashForm.controls.TITLE.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="TITLE"
+           pInputText
+           [(ngModel)]="cash.TITLE"/>
+    <div
+      *ngIf="this.cashForm.controls.TITLE.invalid && (this.cashForm.controls.TITLE.dirty || this.cashForm.controls.TITLE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.cashForm.controls.TITLE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان صندوق اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="domIdType-cash">نوع صندوق</label>
+    <p-dropdown
+      inputId="domIdType-cash"
+      appendTo="body"
+      [filter]="true"
+      placeholder="انتخاب نوع صندوق"
+      [(ngModel)]="cash.DOM_ID_TYPE"
+      formControlName="DOM_ID_TYPE"
+      [ngClass]="[this.cashForm.controls.DOM_ID_TYPE.invalid && (this.cashForm.controls.DOM_ID_TYPE.dirty || this.cashForm.controls.DOM_ID_TYPE.touched)  ?'ng-invalid ng-dirty':'']"
+      [options]="dimIdCashType"
+    ></p-dropdown>
+    <div
+      *ngIf="this.cashForm.controls.DOM_ID_TYPE.invalid && (this.cashForm.controls.DOM_ID_TYPE.dirty || this.cashForm.controls.DOM_ID_TYPE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.cashForm.controls.DOM_ID_TYPE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>نوع صندوق اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="accountNumber-cash">شماره حساب</label>
+    <p-inputNumber
+      inputId="accountNumber-cash"
+      mode="decimal"
+      [useGrouping]="false"
+      formControlName="ACCOUNT_NUMBER"
+      [(ngModel)]="cash.ACCOUNT_NUMBER"
+
+    ></p-inputNumber>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="cardNumber-cash">شماره کارت</label>
+    <p-inputMask
+           id="cardNumber-cash"
+           formControlName="CARD_NUMBER"
+           mask="9999-9999-9999-9999"
+           [(ngModel)]="cash.CARD_NUMBER"></p-inputMask>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="cash-creature">موجودی</label>
+    <p-inputNumber
+      id="cash-creature"
+      mode="decimal"
+      [useGrouping]="true"
+      formControlName="CASH_CREATURE"
+      [(ngModel)]="cash.CASH_CREATURE"
+    ></p-inputNumber>
+  </div>
+
+  <div class="p-field p-md-6"></div>
+
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!cashForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>

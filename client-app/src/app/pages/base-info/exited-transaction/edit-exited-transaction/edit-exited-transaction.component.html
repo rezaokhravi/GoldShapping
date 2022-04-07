@@ -1,0 +1,90 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="exitedTransactionForm" (ngSubmit)="save()">
+  <div class="p-field p-col-12 p-md-6">
+    <label>نام کالا</label>
+    <p-dropdown placeholder="انتخاب کنید..."
+                appendTo="body"
+                [filter]="true"
+                [options]="goods"
+                [(ngModel)]="exitedTransaction.GOOD_ID"
+                [ngClass]="[this.exitedTransactionForm.controls.GOOD_ID.invalid && (this.exitedTransactionForm.controls.GOOD_ID.dirty || this.exitedTransactionForm.controls.GOOD_ID.touched)  ?'ng-invalid ng-dirty':'']"
+                formControlName="GOOD_ID"
+    ></p-dropdown>
+    <div
+      *ngIf="this.exitedTransactionForm.controls.GOOD_ID.invalid && (this.exitedTransactionForm.controls.GOOD_ID.dirty || this.exitedTransactionForm.controls.GOOD_ID.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+      <div *ngIf="this.exitedTransactionForm.controls.GOOD_ID.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان کالا اجباری است.
+      </div>
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>نام انبار</label>
+    <p-dropdown placeholder="انتخاب کنید..."
+                appendTo="body"
+                [filter]="true"
+                [options]="storage"
+                [(ngModel)]="exitedTransaction.STORAGE_ID"
+                [ngClass]="[this.exitedTransactionForm.controls.STORAGE_ID.invalid && (this.exitedTransactionForm.controls.STORAGE_ID.dirty || this.exitedTransactionForm.controls.STORAGE_ID.touched)  ?'ng-invalid ng-dirty':'']"
+                formControlName="STORAGE_ID"
+    ></p-dropdown>
+    <div
+      *ngIf="this.exitedTransactionForm.controls.STORAGE_ID.invalid && (this.exitedTransactionForm.controls.STORAGE_ID.dirty || this.exitedTransactionForm.controls.STORAGE_ID.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+      <div *ngIf="this.exitedTransactionForm.controls.STORAGE_ID.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان انبار اجباری است.
+      </div>
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>وزن (گرم)</label>
+    <p-inputNumber dir="ltr" class="p-text-left"
+                   mode="decimal"
+                   [(ngModel)]="exitedTransaction.WEIGHT"
+                   formControlName="WEIGHT"
+                   [maxFractionDigits]="4"
+                   [minFractionDigits]="1"
+                   [ngClass]="[this.exitedTransactionForm.controls.WEIGHT.invalid && (this.exitedTransactionForm.controls.WEIGHT.dirty || this.exitedTransactionForm.controls.WEIGHT.touched)  ?'ng-invalid ng-dirty':'']"
+    ></p-inputNumber>
+    <div
+      *ngIf="this.exitedTransactionForm.controls.WEIGHT.invalid && (this.exitedTransactionForm.controls.WEIGHT.dirty || this.exitedTransactionForm.controls.WEIGHT.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+      <div *ngIf="this.exitedTransactionForm.controls.WEIGHT.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> وزن اجباری است.
+      </div>
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>تعداد</label>
+    <p-inputNumber dir="ltr" class="p-text-left"
+                   mode="decimal"
+                   [(ngModel)]="exitedTransaction.COUNT"
+                   formControlName="COUNT"
+                   [ngClass]="[this.exitedTransactionForm.controls.COUNT.invalid && (this.exitedTransactionForm.controls.COUNT.dirty || this.exitedTransactionForm.controls.COUNT.touched)  ?'ng-invalid ng-dirty':'']"
+    ></p-inputNumber>
+    <div
+      *ngIf="this.exitedTransactionForm.controls.COUNT.invalid && (this.exitedTransactionForm.controls.COUNT.dirty || this.exitedTransactionForm.controls.COUNT.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+      <div *ngIf="this.exitedTransactionForm.controls.COUNT.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> تعداد اجباری است.
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="p-field p-md-6"></div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!exitedTransactionForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>

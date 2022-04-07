@@ -1,0 +1,34 @@
+[
+  {
+    "id":1,
+    "label":"بنکدار 1",
+    "operatorName":"علی رمضانی",
+    "address":"مشهد",
+    "phoneOne":"05136578952",
+    "phoneTow":"09150741555"
+  },
+  {
+    "id":2,
+    "label":"بنکدار 2",
+    "operatorName":"کمال رحیمی",
+    "address":"مشهد",
+    "phoneOne":"05138540112",
+    "phoneTow":"09124577894"
+  },
+  {
+    "id":3,
+    "label":"بنکدار 3",
+    "operatorName":"مهدی قاسمی",
+    "address":"تهران",
+    "phoneOne":"0218745956",
+    "phoneTow":"0912587421"
+  },
+  {
+    "id":4,
+    "label":"بنکدار 4",
+    "operatorName":"شهناز قهرمانی",
+    "address":"تهران",
+    "phoneOne":"02136578952",
+    "phoneTow":"09120741555"
+  }
+]

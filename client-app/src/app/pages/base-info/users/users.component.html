@@ -1,0 +1,108 @@
+<div class="users-component p-fluid p-formgrid p-grid">
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="createUser()" label="افزودن کاربر" class="p-button-success"
+            icon="bi bi-person-plus" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12">
+    <p-card>
+      <p-table #dt
+               [value]="users"
+               [rows]="10"
+               [paginator]="true"
+               [globalFilterFields]="['NAME','FAMILY','NATIONAL_CODE','ADDRESS','EMAIL','MOBILE']"
+               [(selection)]="selectedUsers"
+               [rowHover]="true"
+               [scrollable]="true"
+               [rowsPerPageOptions]="[10,25,50]"
+               [loading]="loading"
+               dataKey="ID"
+               scrollDirection="both"
+
+      >
+
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between p-grid">
+            <h5 class="p-col-12 p-md-2">لیست کاربران</h5>
+            <div class="p-col-12 p-md-10 ">
+          <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="search($event,dt)" placeholder="جستجو..." />
+          </span>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+
+            <th style="width:200px"></th>
+
+            <th style="width:220px" pSortableColumn="NAME">نام
+              <p-sortIcon field="NAME"></p-sortIcon>
+            </th>
+            <th style="width:220px" pSortableColumn="FAMILY">نام خانوادگی
+              <p-sortIcon field="FAMILY"></p-sortIcon>
+            </th>
+            <th style="width:220px" pSortableColumn="NATIONAL_CODE">کد ملی
+              <p-sortIcon field="NATIONAL_CODE"></p-sortIcon>
+            </th>
+            <th style="width:220px" pSortableColumn="MOBILE">شماره تماس
+              <p-sortIcon field="MOBILE"></p-sortIcon>
+            </th>
+            <th style="width:220px" pSortableColumn="EMAIL">پست الکترونیکی
+              <p-sortIcon field="EMAIL"></p-sortIcon>
+            </th>
+            <th style="width:220px" pSortableColumn="ADDRESS">آدرس
+              <p-sortIcon field="ADDRESS"></p-sortIcon>
+            </th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td style="width:200px" class="p-d-flex p-jc-evenly">
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-sm "
+                      pTooltip="ویرایش"
+                      tooltipPosition="bottom"
+                      (click)="editUser(user)"></button>
+              <button pButton pRipple icon="pi pi-trash"
+                      class="p-button-rounded p-button-warning p-button-sm  p-mr-lg-2 p-mr-md-2 "
+                      pTooltip="حذف"
+                      tooltipPosition="bottom"
+                      (click)="deleteUser(user)"></button>
+              <button pButton pRipple icon="pi pi-key"
+                      class="p-button-rounded p-button-info p-button-sm  p-mr-lg-2 p-mr-md-2 "
+                      pTooltip="مجوز ها"
+                      tooltipPosition="bottom"
+                      (click)="permissionUser(user)"></button>
+            </td>
+            <td style="width:220px"  pTooltip="{{user.NAME}}"
+                tooltipPosition="bottom">{{user.NAME}}</td>
+            <td style="width:220px"  pTooltip="{{user.FAMILY}}"
+                tooltipPosition="bottom">{{user.FAMILY}}</td>
+            <td style="width:220px"  pTooltip="{{user.NATIONAL_CODE}}"
+                tooltipPosition="bottom">{{user.NATIONAL_CODE}}</td>
+            <td style="width:220px"  pTooltip="{{user.MOBILE}}"
+                tooltipPosition="bottom">{{user.MOBILE}}</td>
+            <td style="width:220px"  pTooltip="{{user.EMAIL}}"
+                tooltipPosition="bottom">{{user.EMAIL}}</td>
+            <td style="width:220px"  pTooltip="{{user.ADDRESS}}"
+                tooltipPosition="bottom">{{user.ADDRESS}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="flex: 1 1 auto; justify-content: flex-start">اطلاعاتی جهت نمایش وجود ندارد</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </p-card>
+  </div>
+
+
+</div>
+
+<p-toast position="bottom-left"></p-toast>

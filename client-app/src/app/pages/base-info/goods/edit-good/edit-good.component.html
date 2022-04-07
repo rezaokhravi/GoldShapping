@@ -1,0 +1,66 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="goodForm" (ngSubmit)="saveGood()">
+  <div class="p-field p-col-12 p-md-6">
+    <label for="code-good">کد کالا</label>
+    <input type="text"
+           id="code-good"
+           [ngClass]="[this.goodForm.controls.CODE.invalid && (this.goodForm.controls.CODE.dirty || this.goodForm.controls.CODE.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="CODE"
+           pInputText
+           [(ngModel)]="good.CODE"/>
+    <div
+      *ngIf="this.goodForm.controls.CODE.invalid && (this.goodForm.controls.CODE.dirty || this.goodForm.controls.CODE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+
+      <div *ngIf="this.goodForm.controls.CODE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> کد کالا اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="title-good">عنوان</label>
+    <input type="text"
+           id="title-good"
+           [ngClass]="[this.goodForm.controls.TITLE.invalid && (this.goodForm.controls.TITLE.dirty || this.goodForm.controls.TITLE.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="TITLE"
+           pInputText
+           [(ngModel)]="good.TITLE"/>
+    <div
+      *ngIf="this.goodForm.controls.TITLE.invalid && (this.goodForm.controls.TITLE.dirty || this.goodForm.controls.TITLE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2">
+
+      <div *ngIf="this.goodForm.controls.TITLE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان کالا اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="domIdType-good">نوع کالا</label>
+    <p-dropdown inputId="drp-domIdType-good" placeholder="انتخاب کنید..."
+                appendTo="body"
+                [filter]="true"
+                [options]="domGoodType"
+                [(ngModel)]="good.DOM_ID_TYPE"
+                formControlName="DOM_ID_TYPE"
+    ></p-dropdown>
+  </div>
+
+
+  <div class="p-field p-md-6"></div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!goodForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>

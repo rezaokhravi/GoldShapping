@@ -1,0 +1,15 @@
+:host ::ng-deep .exchange-component {
+  textarea {
+    resize: vertical;
+  }
+}
+
+:host ::ng-deep .p-datatable-scrollable .p-datatable-tbody>tr>td,
+:host ::ng-deep .p-datatable-scrollable .p-datatable-tfoot>tr>td,
+:host ::ng-deep .p-datatable-scrollable .p-datatable-thead>tr>th {
+  justify-content: center;
+}
+
+:host ::ng-deep .p-datatable-scrollable .p-datatable-thead>tr>th {
+  background-color: #eeeeee;
+}

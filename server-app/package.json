@@ -1,0 +1,57 @@
+{
+  "name": "server-app",
+  "version": "1.0.0",
+  "description": "Gold Shopping",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "build-ts": "tsc",
+    "gulp": "gulp",
+    "startServer": "nodemon ./src/app.ts",
+    "startServer:prod": "tsc && nodemon dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gold"
+  ],
+  "author": "reza okhravi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-session": "^1.17.2",
+    "http": "^0.0.1-security",
+    "install": "^0.13.0",
+    "jalali-moment": "^3.3.10",
+    "joi": "^17.4.1",
+    "mssql": "^7.1.3",
+    "multer": "^1.4.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.34"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/express-fileupload": "^1.1.7",
+    "@types/mssql": "^7.1.2",
+    "@types/node": "^16.3.2",
+    "del": "^6.0.0",
+    "fancy-log": "^1.3.3",
+    "gulp": "^4.0.2",
+    "gulp-minifier": "^3.5.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-zip": "^5.1.0",
+    "nodemon": "^2.0.12",
+    "sass": "^1.35.2",
+    "ts-loader": "^9.2.5",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5",
+    "webpack": "^5.49.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-stream": "^6.1.2"
+  }
+}

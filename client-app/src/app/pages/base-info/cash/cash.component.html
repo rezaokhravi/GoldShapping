@@ -1,0 +1,71 @@
+<div class="exchange-component p-fluid p-formgrid p-grid">
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="createCash()"  label="افزودن صندوق" class="p-button-success" icon="bi bi-plus" iconPos="left" ></button>
+  </div>
+
+  <div class="p-field p-col-12">
+    <p-card>
+      <p-table #dt
+               [value]="cashes"
+               [rows]="10"
+               [paginator]="true"
+               [globalFilterFields]="['TITLE','ACCOUNT_NUMBER','CARD_NUMBER','DOM_ID_TYPE_TITLE','CASH_CREATURE']"
+               [(selection)]="selectedCash"
+               [rowHover]="true"
+               [scrollable]="true"
+               [rowsPerPageOptions]="[10,25,50]"
+               [loading]="loading"
+               dataKey="id"
+               scrollDirection="both"
+
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between p-grid">
+            <h5 class="p-col-12 p-md-2">لیست صندوق ها</h5>
+            <div class="p-col-12 p-md-10 ">
+          <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="search($event,dt)" placeholder="جستجو..." />
+          </span>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:150px" ></th>
+            <th style="width:220px" pSortableColumn="TITLE">نام <p-sortIcon field="TITLE"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="DOM_ID_TYPE_TITLE">نوع صندوق <p-sortIcon field="DOM_ID_TYPE_TITLE"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="ACCOUNT_NUMBER">شماره حساب<p-sortIcon field="ACCOUNT_NUMBER"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="CARD_NUMBER">شماره کارت<p-sortIcon field="CARD_NUMBER"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="CASH_CREATURE">موجودی<p-sortIcon field="CASH_CREATURE"></p-sortIcon></th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cash>
+          <tr>
+            <td style="width:150px" class="p-d-flex p-jc-evenly" >
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-sm " (click)="editCash(cash)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning p-button-sm p-mr-lg-2 p-mr-md-2" (click)="deleteCash(cash)"></button>
+            </td>
+            <td style="width:220px">{{cash.TITLE}}</td>
+            <td style="width:220px">{{cash.DOM_ID_TYPE_TITLE}}</td>
+            <td style="width:220px">{{cash.ACCOUNT_NUMBER}}</td>
+            <td style="width:220px" >{{cash.CARD_NUMBER| mask: '9999-9999-9999-9999'}}</td>
+            <td style="width:220px" >{{cash.CASH_CREATURE| mask: 'separator':','}}</td>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="flex: 1 1 auto; justify-content: flex-start">اطلاعاتی جهت نمایش وجود ندارد</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+
+</div>
+<p-toast position="bottom-left"></p-toast>

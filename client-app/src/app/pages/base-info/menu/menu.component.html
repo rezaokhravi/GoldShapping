@@ -1,0 +1,74 @@
+<div class="exchange-component p-fluid p-formgrid p-grid">
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="createMenu()"  label="افزودن منو" class="p-button-success" icon="bi bi-plus" iconPos="left" ></button>
+  </div>
+
+  <div class="p-field p-col-12">
+    <p-card>
+      <p-table #dt
+               [value]="menu"
+               [rows]="10"
+               [paginator]="true"
+               [globalFilterFields]="['TITLE','NAME','ROUTE','ICON','P_MENU_TITLE']"
+               [(selection)]="selectedMenu"
+               [rowHover]="true"
+               [scrollable]="true"
+               [rowsPerPageOptions]="[10,25,50]"
+               [loading]="loading"
+               dataKey="id"
+               scrollDirection="both"
+
+      >
+
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between p-grid">
+            <h5 class="p-col-12 p-md-2">لیست منوها</h5>
+            <div class="p-col-12 p-md-10 ">
+          <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  (input)="search($event,dt)" placeholder="جستجو..." />
+          </span>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:150px" ></th>
+            <th style="width:100px" pSortableColumn="ORDERING">ترتیب<p-sortIcon field="ORDERING"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="TITLE">عنوان<p-sortIcon field="TITLE"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="NAME">نام<p-sortIcon field="NAME"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="ROUTE">مسیر<p-sortIcon field="ROUTE"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="ICON">ایکن<p-sortIcon field="ICON"></p-sortIcon></th>
+            <th style="width:220px" pSortableColumn="P_MENUS_TITLE">والد<p-sortIcon field="P_MENUS_TITLE"></p-sortIcon></th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-menu>
+          <tr>
+            <td style="width:150px" class="p-d-flex p-jc-evenly">
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-sm " (click)="editMenu(menu)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning p-button-sm p-mr-lg-2 p-mr-md-2 " (click)="deleteMenu(menu)"></button>
+            </td>
+            <td style="width:100px">{{menu.ORDERING}}</td>
+            <td style="width:220px">{{menu.TITLE}}</td>
+            <td style="width:220px">{{menu.NAME}}</td>
+            <td style="width:220px">{{menu.ROUTE}}</td>
+            <td style="width:220px">{{menu.ICON}}</td>
+            <td style="width:220px">{{menu.P_MENUS_TITLE}}</td>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="flex: 1 1 auto; justify-content: flex-start">اطلاعاتی جهت نمایش وجود ندارد</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+
+</div>
+<p-toast position="bottom-left"></p-toast>

@@ -1,0 +1,32 @@
+{
+	"compileOnSave": true,
+  "compilerOptions": {                        
+    "target": "es6",                               
+    "module": "commonjs",                           
+    "outDir": "./dist",   
+	"lib": ["dom", "es2015", "es2016"],	
+    "rootDir": "./src",                             
+    "strict": true,
+    "moduleResolution": "node",
+	"allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,     
+	"noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+	"experimentalDecorators": true,
+    "allowJs": true,
+	"baseUrl": ".",
+	"noUnusedLocals": false,
+    "strictPropertyInitialization": false,
+	"paths": {
+				"*": [
+					"node_modules/*",
+					"./src"
+				]
+			}	
+  },
+  "include": ["src/**/*"],
+  "exclude":[
+    "./node_modules"
+  ]
+}

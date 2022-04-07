@@ -1,0 +1,25 @@
+<div class="exchange-component p-fluid p-formgrid p-grid">
+  <div class="p-field p-col-12 p-md-6">
+    <label for="drp-noe-tabadol">نوع تبادل</label>
+    <div class="p-field p-col-12  p-grid" [@fadeInOnEnter]>
+      <div  class="p-field p-col-12 p-md-6" >
+        <p-radioButton name="domIdExchangeType" [value]="enExchangeTypes.deliver" label="ارسال" [(ngModel)]="domIdExchangeType"
+        ></p-radioButton>
+      </div>
+      <div  class="p-field p-col-12 p-md-6">
+        <p-radioButton name="domIdExchangeType"  [value]="enExchangeTypes.receive" label="دریافت" [(ngModel)]="domIdExchangeType"
+        ></p-radioButton>
+      </div>
+    </div>
+  </div>
+
+  <!-------- send ------------->
+  <app-workshop-deliver *ngIf="domIdExchangeType==enExchangeTypes.deliver" [domIdAccountType]="domIdAccountType" [domIdExchangeType]="domIdExchangeType"></app-workshop-deliver>
+
+  <!-------- receive ------------->
+  <app-workshop-receive *ngIf="domIdExchangeType==enExchangeTypes.receive" [domIdAccountType]="domIdAccountType" [domIdExchangeType]="domIdExchangeType" ></app-workshop-receive>
+
+
+</div>
+
+

@@ -1,0 +1,104 @@
+<form class="edit-user-component p-fluid p-formgrid p-grid" [formGroup]="workshopForm" (ngSubmit)="saveWorkshop()">
+  <div class="p-field p-col-12 p-md-6">
+    <label for="title-wholesaler">عنوان</label>
+    <input type="text"
+           id="title-wholesaler"
+           [ngClass]="[this.workshopForm.controls.TITLE.invalid && (this.workshopForm.controls.TITLE.dirty || this.workshopForm.controls.TITLE.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="TITLE"
+           pInputText
+           [(ngModel)]="workshop.TITLE"/>
+    <div
+      *ngIf="this.workshopForm.controls.TITLE.invalid && (this.workshopForm.controls.TITLE.dirty || this.workshopForm.controls.TITLE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.workshopForm.controls.TITLE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان کارگاه اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="responsibleName-wholesaler">نام مسئول</label>
+    <input type="text"
+           id="responsibleName-wholesaler"
+           [ngClass]="[this.workshopForm.controls.RESPONSIBLE_NAME.invalid && (this.workshopForm.controls.RESPONSIBLE_NAME.dirty || this.workshopForm.controls.RESPONSIBLE_NAME.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="RESPONSIBLE_NAME"
+           pInputText
+           [(ngModel)]="workshop.RESPONSIBLE_NAME"/>
+    <div
+      *ngIf="this.workshopForm.controls.RESPONSIBLE_NAME.invalid && (this.workshopForm.controls.RESPONSIBLE_NAME.dirty || this.workshopForm.controls.RESPONSIBLE_NAME.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.workshopForm.controls.RESPONSIBLE_NAME.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> عنوان مسئول اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="phoneOne-wholesaler">شماره تماس 1</label>
+    <p-inputMask
+           id="phoneOne-wholesaler"
+           [ngClass]="[this.workshopForm.controls.PHONE_ONE.invalid && (this.workshopForm.controls.PHONE_ONE.dirty || this.workshopForm.controls.PHONE_ONE.touched)  ?'ng-invalid ng-dirty':'']"
+           formControlName="PHONE_ONE"
+           mask="99999999999"
+           [(ngModel)]="workshop.PHONE_ONE"></p-inputMask>
+    <div
+      *ngIf="this.workshopForm.controls.PHONE_ONE.invalid && (this.workshopForm.controls.PHONE_ONE.dirty || this.workshopForm.controls.PHONE_ONE.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.workshopForm.controls.PHONE_ONE.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i> شماره تماس اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="phoneTow-wholesaler">شماره تماس 2</label>
+    <p-inputMask
+           id="phoneTow-wholesaler"
+           formControlName="PHONE_TOW"
+           mask="99999999999"
+           [(ngModel)]="workshop.PHONE_TOW"></p-inputMask>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="address-wholesaler">آدرس</label>
+    <input type="text"
+           id="address-wholesaler"
+           [ngClass]="[this.workshopForm.controls.ADDRESS.invalid && (this.workshopForm.controls.ADDRESS.dirty || this.workshopForm.controls.ADDRESS.touched)  ?'ng-invalid ng-dirty':'']"
+           required
+           formControlName="ADDRESS"
+           pInputText
+           [(ngModel)]="workshop.ADDRESS"/>
+    <div
+      *ngIf="this.workshopForm.controls.ADDRESS.invalid && (this.workshopForm.controls.ADDRESS.dirty || this.workshopForm.controls.ADDRESS.touched)"
+      [ngStyle]="{color:'var(--pink-500)'}" class="p-mt-2" [@fadeOutOnLeave]>
+
+      <div *ngIf="this.workshopForm.controls.ADDRESS.errors?.required" [@fadeInOnEnter]>
+        <i class="bi bi-exclamation-circle"></i>آدرس اجباری است.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="p-field p-md-6"></div>
+  <div class="p-field p-md-6"></div>
+
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="submit" [disabled]="!workshopForm.valid" label="ذخیره اطلاعات" class="p-button-success"
+            icon="bi bi-save" iconPos="left"></button>
+  </div>
+
+  <div class="p-field p-col-12 p-md-3">
+    <button pButton pRipple type="button" (click)="this.ref.close(null)" label="منصرف شدم"
+            class="p-button-outlined p-button-danger" icon="bi bi-x-square" iconPos="left"></button>
+  </div>
+
+</form>
