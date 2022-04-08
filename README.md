@@ -15,6 +15,8 @@ develop by Angular v12.
 > 
 > npm i
 > 
+> extract rar files from ./stimulsoft-reports-js then copy to ./client-app/node_modules/stimulsoft-reports-js
+> 
 > npm run startClinet
 
 # DataBase
